@@ -14,6 +14,24 @@
         "value": "inter",
         "createdAt": "2026-10-08T03:06:46.167Z",
         "reason": "Body font captured from the live site; user made /capture the only source of truth"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/pages/index.astro"
+        ],
+        "createdAt": "2026-10-08T03:15:08.103Z",
+        "reason": "Claude: L226 is the CSS-border triangle forming the video play icon, not a card accent"
+      },
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          "src/pages/index.astro"
+        ],
+        "createdAt": "2026-10-08T03:15:08.356Z",
+        "reason": "Claude: L226-227 play-icon triangle and borderless iframe, not an accent-bordered card"
       }
     ]
   }
