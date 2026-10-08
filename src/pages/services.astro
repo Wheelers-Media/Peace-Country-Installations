@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import heroImg from '../../capture/assets/d146fa44-cee5-4038-a828-9e3f6a7ba4c2.png';
+import builtImg from '../../capture/assets/4b95c349-55a4-416d-a270-35f113c644c3.png';
+
+const services = [
+  ['Starlink Supply & Installation', 'Professional mounting, routing, and setup of Starlink hardware for optimal speeds and reliability.'],
+  ['Starlink Equipment Rentals', 'Short-term and long-term rental options for job sites, events, and temporary remote setups.'],
+  ['Starlink Lease to Own Programs', 'Affordable monthly payment plans to get you connected without the massive upfront hardware costs.'],
+  ['Cellular Signal Booster Installation', 'Boost weak cell signals in your home, shop, or office to ensure clear calls and reliable data.'],
+  ['Remote Communication Solutions', 'Custom-engineered connectivity for the most isolated locations in Northern Alberta.'],
+  ['Residential Connectivity Solutions', 'Robust home networks, Wi-Fi extensions, and reliable rural internet for your family.'],
+  ['Commercial Connectivity Solutions', 'Enterprise-grade networks and failover systems to keep your business running smoothly.'],
+  ['Farm & Agricultural Connectivity', 'Connect outbuildings, shops, and smart farming equipment across your entire property.'],
+  ['Job Site Internet Solutions', 'Rugged, deployable internet solutions for construction camps, oilfield sites, and remote crews.'],
+  ['Off-Grid Communication Systems', 'Solar-powered and low-draw communication setups for true off-grid living and operations.'],
+];
+---
+<Layout
+  title="Comprehensive Connectivity Solutions | Peace Country Installations"
+  description="Peace Country Installations provides reliable Starlink, cellular booster, and remote communication solutions across Northern Alberta. We specialize in professional installations, affordable equipment rentals, and flexible lease to own programs."
+>
+  <PageHero
+    image={heroImg}
+    alt="Professional Starlink Installation in Northern Alberta"
+    kicker="FREE QUOTES & LEASE TO OWN FINANCING AVAILABLE"
+    title="Comprehensive Connectivity Solutions"
+    lede="Peace Country Installations provides reliable Starlink, cellular booster, and remote communication solutions across Northern Alberta. We specialize in professional installations, affordable equipment rentals for temporary projects, flexible lease to own programs, and custom connectivity solutions for homes, businesses, job sites, farms, and off-grid locations."
+  >
+    <a class="btn btn-primary" href="/#quote">REQUEST A FREE QUOTE</a>
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap built">
+      <div>
+        <h2>Built for Northern Alberta</h2>
+        <p class="lede">We pride ourselves on delivering competitive pricing, quality workmanship, and dependable local support that helps keep Northern Alberta connected.</p>
+        <p>Whether you're working in the field, living off-grid, running a business, or simply need better connectivity, Peace Country Installations offers reliable solutions tailored to your needs and budget. We specialize in Lease to Own Financing to get you connected affordably, and Equipment Rentals for temporary projects, work camps, events, and remote operations.</p>
+      </div>
+      <Image src={builtImg} alt="Equipment Rentals" widths={[480, 800, 1100]} sizes="(min-width: 960px) 520px, 92vw" class="built-img" />
+    </div>
+  </section>
+
+  <section class="section list-wrap" aria-label="Services">
+    <div class="wrap">
+      <ul class="svc">
+        {services.map(([name, text]) => (
+          <li><h3>{name}</h3><p>{text}</p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand label="GET YOUR FREE ESTIMATE" />
+</Layout>
+
+<style>
+  .built { display: grid; gap: 40px; align-items: center; grid-template-columns: 1fr; }
+  @media (min-width: 960px) { .built { grid-template-columns: 1fr 1fr; gap: 72px; } }
+  .built-img { width: 100%; border-radius: var(--r); aspect-ratio: 5 / 4; object-fit: cover; }
+  .list-wrap { background: var(--surface); border-top: 1px solid var(--line); }
+  .svc { display: grid; grid-template-columns: 1fr; column-gap: 64px; }
+  @media (min-width: 760px) { .svc { grid-template-columns: 1fr 1fr; } }
+  .svc li { padding: 26px 0 22px; border-top: 1px solid var(--line); }
+  .svc h3 { font-size: 1.15rem; margin-bottom: 6px; }
+  .svc h3::before { content: ''; display: inline-block; width: 10px; height: 10px; margin-right: 12px; border-radius: 2px; background: var(--accent); vertical-align: 0.05em; }
+  .svc p { margin: 0; color: var(--muted); max-width: 52ch; }
+</style>

@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "montserrat",
+        "createdAt": "2026-10-08T03:06:45.936Z",
+        "reason": "Brand font: matches the logo wordmark and is the font captured from the live site; user made /capture the only source of truth"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-10-08T03:06:46.167Z",
+        "reason": "Body font captured from the live site; user made /capture the only source of truth"
+      }
+    ]
+  }
+}

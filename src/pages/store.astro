@@ -1,0 +1,101 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import ProductCard from '../components/ProductCard.astro';
+import products from '../../capture/products.json';
+import { captureImage } from '../lib/images';
+import heroImg from '../../capture/assets/d73ca228-5531-47df-85d3-0f2bdb20a3ea.jpg';
+
+// Category + feature bullets per product, verbatim from capture/content/store.md.
+const extras: Record<string, { category: string; features: string[] }> = {
+  'Starlink Gen 4 Cable (Multiple Lengths)': { category: 'Starlink Hardware & Accessories', features: ['15m length - $105.00', '45m length - $210.00', 'Weather-sealed connectors'] },
+  'Starlink Gen 3 & Gen 4x Pivot Mount': { category: 'Starlink Hardware & Accessories', features: ['Sloped roof & wall engineering', 'Extreme outdoor-grade coating', 'Precision alignment pivot base'] },
+  'Gen 2 Router Wall Mount': { category: 'Starlink Hardware & Accessories', features: ['Space-saving dual housing', 'Cable management channels', 'Durable rugged structure'] },
+  'Starlink Mini Portable Tripod': { category: 'Starlink Hardware & Accessories', features: ['Heavy-duty collapsible design', 'Rapid ground-level deployment', 'High-stability locking legs'] },
+  'BrosTrend Point-to-Point Network Bridge': { category: 'Networking Gear & Accessories', features: ['Wireless property-wide bridging', 'Rugged weather-resistant build', 'High-speed long-range execution'] },
+  'Starlink Mini 12V Car Adapter': { category: 'Starlink Hardware & Accessories', features: ['Direct 12V vehicle integration', 'Hard-toggle power switch', 'Heavy-duty cab insulation'] },
+  'Starlink Mini Magnetic Mount': { category: 'Starlink Hardware & Accessories', features: ['Ultra-strong magnetic base', 'Rugged hard-shell edge protection', 'Rapid, tool-free installation'] },
+  'Starlink Gen 3 Magnetic Mount': { category: 'Starlink Hardware & Accessories', features: ['Industrial-strength magnetic array', 'Rigid hard-shell frame protection', 'Highway-speed stability certified'] },
+  'Starlink Mini Wall Mount': { category: 'Starlink Hardware & Accessories', features: ['Exterior wall & fascia engineering', 'Weather-resistant industrial coating', 'Compact, low-profile footprint'] },
+};
+
+const items = products.map((p) => ({ ...p, ...(extras[p.name] ?? { category: 'Starlink Hardware & Accessories', features: [] }) }));
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const categories = [...new Set(items.map((i) => i.category))].map((name) => ({
+  name,
+  id: slug(name),
+  items: items.filter((i) => i.category === name),
+}));
+---
+<Layout
+  title="Store - Starlink Hardware & Accessories | Peace Country Installations"
+  description="Shop our inventory of genuine Starlink replacement parts, accessories, and hardware. Local pickup in Grande Prairie and delivery across Northern Alberta available."
+>
+  <PageHero
+    image={heroImg}
+    alt="Northern Alberta Landscape"
+    kicker="GENUINE OEM PARTS | LOCAL PICKUP AVAILABLE | FAST DEPLOYMENT"
+    title="Hardware & Accessories"
+    lede="Order genuine replacement parts and accessories directly from our local Grande Prairie inventory. Fast deployment for remote job sites and off-grid locations."
+  />
+
+  <div class="wrap store section">
+    <aside class="cats" aria-labelledby="cats-title">
+      <h2 id="cats-title">Categories</h2>
+      <ul>
+        {categories.map((c) => <li><a href={`#${c.id}`}>{c.name} <span>{c.items.length}</span></a></li>)}
+      </ul>
+    </aside>
+
+    <div class="groups">
+      {categories.map((c) => (
+        <section id={c.id} aria-labelledby={`${c.id}-h`}>
+          <h2 id={`${c.id}-h`} class="visually-hidden">{c.name}</h2>
+          <div class="grid">
+            {c.items.map((p) => (
+              <ProductCard
+                image={captureImage(p.image_path)}
+                alt={p.name}
+                name={p.name}
+                stock="In Stock"
+                category={p.category}
+                price={p.price}
+                description={p.description}
+                features={p.features}
+                buyLabel={p.buy_button_label}
+                href={p.checkout_url}
+              />
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <section class="note" aria-labelledby="note-h">
+        <h2 id="note-h">Regional Parts Inventory: Finalizing Tracking</h2>
+        <p>We are currently finalizing our dynamic inventory tracking for Starlink Sales &amp; Professional Installations across Grande Prairie, Beaverlodge, and the surrounding region. If a specific component is unavailable, or you require immediate Cellular Booster Installation or Job Site Internet Solutions in Alberta, REQUEST A FREE QUOTE. Lease to Own Financing &amp; Equipment Rentals Available. 24/7 Local Support.</p>
+        <div class="btns">
+          <a class="btn btn-primary" href="/#quote">Request a Free Quote</a>
+          <a class="btn btn-ghost" href="tel:5874160303">Call 24/7: 587-416-0303</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .store { display: grid; gap: 40px; grid-template-columns: 1fr; }
+  @media (min-width: 1024px) { .store { grid-template-columns: 220px 1fr; gap: 48px; } .cats { position: sticky; top: 100px; align-self: start; } }
+  .cats h2 { font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .cats ul { display: flex; flex-wrap: wrap; gap: 8px; }
+  @media (min-width: 1024px) { .cats ul { flex-direction: column; } }
+  .cats a { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); text-decoration: none; font-weight: 600; font-size: 0.92rem; }
+  .cats a:hover { border-color: var(--accent-ink); }
+  .cats span { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .groups { display: grid; gap: 22px; }
+  .grid { display: grid; gap: 22px; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1200px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  .note { margin-top: 32px; padding: clamp(24px, 4vw, 40px); border-radius: var(--r); background: var(--night); color: #eef2f6; }
+  .note h2 { font-size: 1.4rem; }
+  .note p { color: #c5cfdb; max-width: 70ch; margin-bottom: 24px; }
+</style>

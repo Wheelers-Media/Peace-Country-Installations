@@ -1,0 +1,26 @@
+
+================================================================
+CAPTURE SUMMARY
+================================================================
+Site:         https://peacecountryinstallations.ca/
+Output:       G:\peace country installations\capture
+Time:         56s
+Pages:        4
+Products:     9  (9 with a checkout URL)
+Assets:       33 files  (images 25, fonts 8, videos 0)
+Screenshots:  8
+
+FAILED TO LOAD — pages (0):
+  none
+
+FAILED TO LOAD — assets (0):
+  none
+
+HTTP errors seen in the browser (0):
+  none
+
+Requests that failed outright (0):
+  none
+
+JavaScript console errors (0):
+  none

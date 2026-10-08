@@ -1,0 +1,197 @@
+---
+import '../styles/global.css';
+import { Image, getImage } from 'astro:assets';
+import logoDark from '../../capture/assets/7178cf4f-902f-43b2-a9ab-bebc2ed7e301.png';
+import logoLight from '../../capture/assets/bc4973f7-b223-4b3e-a1ed-4bdba0eb96f0.png';
+import shareCard from '../../capture/assets/7c30744f-1bcd-4e59-9d7d-e78ae772538d.png';
+
+interface Props { title: string; description: string }
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = await getImage({ src: shareCard, format: 'jpg', width: 1024 });
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const nav = [
+  { href: '/services', label: 'Services' },
+  { href: '/store', label: 'Store' },
+  { href: '/about', label: 'About Us' },
+];
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Peace Country Installations',
+  url: 'https://peacecountryinstallations.ca/',
+  telephone: '+1-587-416-0303',
+  email: 'sales@pcinstalls.ca',
+  address: { '@type': 'PostalAddress', addressLocality: 'Grande Prairie', addressRegion: 'AB', addressCountry: 'CA' },
+  areaServed: 'Northern Alberta',
+  openingHours: 'Mo-Su 00:00-23:59',
+  sameAs: [
+    'https://www.facebook.com/profile.php?id=61583161493114',
+    'https://www.instagram.com/peacecountryinstallation/',
+  ],
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <meta name="theme-color" content="#0b1422" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(og.src, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <p class="topbar">Lease to Own Financing Available | Equipment Rentals | Free Quotes!</p>
+    <header class="site-header">
+      <div class="wrap bar">
+        <a href="/" class="brand" aria-label="Peace Country Installations home">
+          <Image src={logoDark} alt="" width={132} densities={[1, 2]} loading="eager" class="logo on-light" />
+          <Image src={logoLight} alt="" width={132} densities={[1, 2]} loading="eager" class="logo on-dark" />
+        </a>
+        <nav aria-label="Primary" class="nav-desktop">
+          <ul>
+            {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
+          </ul>
+          <a class="phone" href="tel:5874160303">587-416-0303</a>
+          <a class="btn btn-primary" href="/#quote">Request a Quote</a>
+        </nav>
+        <details class="nav-mobile">
+          <summary><span class="visually-hidden">Menu</span><span class="burger" aria-hidden="true"></span></summary>
+          <nav aria-label="Mobile">
+            <ul>
+              <li><a href="/">Home</a></li>
+              {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
+              <li><a href="tel:5874160303">587-416-0303</a></li>
+            </ul>
+            <a class="btn btn-primary btn-block" href="/#quote">Request a Quote</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+
+    <main id="main"><slot /></main>
+
+    <footer class="site-footer">
+      <div class="wrap cols">
+        <div>
+          <Image src={logoDark} alt="Peace Country Installations" width={170} densities={[1, 2]} class="logo on-light" />
+          <Image src={logoLight} alt="Peace Country Installations" width={170} densities={[1, 2]} class="logo on-dark" />
+          <p class="muted">Reliable Rural Internet &amp; Communications Solutions for Northern Alberta.</p>
+          <ul class="social">
+            <li><a href="https://www.facebook.com/profile.php?id=61583161493114" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="https://www.instagram.com/peacecountryinstallation/" target="_blank" rel="noopener">Instagram</a></li>
+          </ul>
+        </div>
+        <nav aria-labelledby="f-sitemap">
+          <h2 id="f-sitemap">Sitemap</h2>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/store">Store</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/#quote">Request a Quote</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2>Contact Us</h2>
+          <address>
+            <ul>
+              <li><a href="tel:5874160303">587-416-0303</a></li>
+              <li><a href="mailto:sales@pcinstalls.ca">sales@pcinstalls.ca</a></li>
+              <li><a href="mailto:support@pcinstalls.ca">support@pcinstalls.ca</a></li>
+            </ul>
+          </address>
+        </div>
+        <div>
+          <h2>Operating Hours</h2>
+          <p>24 Hours a Day, 7 Days a Week</p>
+        </div>
+      </div>
+      <div class="wrap legal">
+        <p>© 2026 Peace Country Installations. All Rights Reserved. peacecountryinstallations.ca</p>
+      </div>
+    </footer>
+
+    <a class="call-fab" href="tel:5874160303">📞 Call 24/7: 587-416-0303</a>
+  </body>
+</html>
+
+<style>
+  .skip { position: absolute; left: 8px; top: -60px; z-index: 30; background: var(--accent); color: var(--on-accent); padding: 10px 14px; border-radius: var(--r-sm); font-weight: 700; }
+  .skip:focus { top: 8px; }
+  .topbar {
+    margin: 0; padding: 8px var(--gutter); text-align: center;
+    background: var(--night); color: #dfe6ee;
+    font: 600 0.8rem/1.4 var(--font-head); letter-spacing: 0.03em;
+  }
+  .site-header {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 68px; }
+  .brand { display: block; flex-shrink: 0; }
+  .logo { width: 132px; height: auto; }
+  .on-dark { display: none; }
+  @media (prefers-color-scheme: dark) { .on-light { display: none; } .on-dark { display: block; } }
+
+  .nav-desktop { display: none; align-items: center; gap: 28px; }
+  .nav-desktop ul { display: flex; gap: 26px; }
+  .nav-desktop a:not(.btn), .nav-mobile a:not(.btn) { text-decoration: none; font: 600 0.95rem/1 var(--font-head); }
+  .nav-desktop ul a { display: inline-block; padding-block: 8px; border-bottom: 2px solid transparent; }
+  .nav-desktop ul a:hover, .nav-desktop ul a[aria-current='page'] { border-color: var(--accent); }
+  .phone { color: var(--muted); font-variant-numeric: tabular-nums; }
+  @media (min-width: 900px) { .nav-desktop { display: flex; } .nav-mobile { display: none; } }
+
+  .nav-mobile summary { list-style: none; cursor: pointer; width: 48px; height: 48px; display: grid; place-items: center; border-radius: var(--r-sm); }
+  .nav-mobile summary::-webkit-details-marker { display: none; }
+  .burger, .burger::before, .burger::after { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: transform 0.25s var(--ease), background-color 0.2s; }
+  .burger { position: relative; }
+  .burger::before, .burger::after { content: ''; position: absolute; left: 0; }
+  .burger::before { top: -7px; }
+  .burger::after { top: 7px; }
+  .nav-mobile[open] .burger { background: transparent; }
+  .nav-mobile[open] .burger::before { transform: translateY(7px) rotate(45deg); }
+  .nav-mobile[open] .burger::after { transform: translateY(-7px) rotate(-45deg); }
+  .nav-mobile nav {
+    position: absolute; left: 0; right: 0; top: 68px;
+    background: var(--surface); border-bottom: 1px solid var(--line);
+    padding: 8px var(--gutter) 20px; box-shadow: 0 18px 30px rgb(11 20 34 / 0.12);
+  }
+  .nav-mobile li a { display: block; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .nav-mobile .btn { margin-top: 16px; }
+
+  .site-footer { background: var(--surface-2); padding-top: 64px; }
+  .cols { display: grid; gap: 36px; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .cols { grid-template-columns: 1.6fr 1fr 1fr 1fr; } }
+  .site-footer h2 { font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+  .site-footer .logo { width: 170px; margin-bottom: 16px; }
+  .site-footer li { margin-bottom: 0.5em; }
+  .site-footer a { text-decoration: none; display: inline-block; padding-block: 2px; }
+  .site-footer a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .site-footer address { font-style: normal; }
+  .social { display: flex; gap: 20px; font-weight: 600; }
+  .legal { border-top: 1px solid var(--line); margin-top: 48px; padding-block: 20px 96px; font-size: 0.85rem; color: var(--muted); }
+  .legal p { margin: 0; }
+  @media (min-width: 900px) { .legal { padding-bottom: 24px; } }
+
+  .call-fab {
+    position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 20;
+    display: flex; justify-content: center; align-items: center; min-height: 52px;
+    background: var(--accent); color: var(--on-accent); border-radius: var(--r-sm);
+    font: 700 0.95rem/1 var(--font-head); text-decoration: none;
+    box-shadow: 0 10px 28px rgb(11 20 34 / 0.28);
+  }
+  @media (min-width: 900px) { .call-fab { display: none; } }
+</style>

@@ -1,0 +1,98 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import heroImg from '../../capture/assets/2ae76c2a-6cf0-4d0a-abff-0651be32798d.png';
+import dylanImg from '../../capture/assets/b203b193-5401-4551-90c5-2499b76f1815.jpg';
+import kyleImg from '../../capture/assets/6f23a532-3b18-4c19-ae24-c1541631f0a5.png';
+
+const team = [
+  {
+    id: 'dylan',
+    name: 'Dylan Nixon',
+    role: 'FOUNDER & CHIEF EXECUTIVE OFFICER',
+    email: 'dylan@pcinstalls.ca',
+    img: dylanImg,
+    alt: 'Dylan Nixon – Founder & CEO, Peace Country Installations',
+    bio: [
+      'My name is Dylan Nixon, and I founded Peace Country Installations after spending nearly a decade working in the telecommunications industry across Northern Alberta. What started as a company focused on professional Starlink and signal booster installations has grown into a complete connectivity solutions provider serving homes, farms, businesses, work sites, and remote locations.',
+      "Today, we don't just install equipment — we supply Starlink systems, offer lease-to-own options, rental units, Starlink accessories, professional installations, rural signal booster solutions, and ongoing support to help our customers stay connected wherever they are. Whether you're looking for reliable internet at home, on the road, at a remote worksite, or off-grid, we work with you to find a solution that fits your needs and budget.",
+      "As a locally owned and operated company based in Grande Prairie, we understand the challenges that come with living and working in Northern Alberta. That's why we focus on honest advice, fair pricing, reliable service, and solutions that are built to perform in real-world northern conditions.",
+      'Our team holds current fall arrest certifications and required safety tickets, ensuring every installation is completed safely and professionally. We take pride in building lasting relationships with our customers through quality workmanship, clear communication, and dependable support long after the installation is complete.',
+      "Outside of work, I'm proud to be involved in the community by playing rugby with the Grande Prairie Centaurs. Being part of the team reflects many of the same values that drive this business: teamwork, accountability, discipline, and always showing up for the people who depend on you.",
+      "At the end of the day, Peace Country Installations is about more than internet and equipment. It's about helping people stay connected, supporting local families, farms, businesses, and remote workers, while providing dependable service and practical solutions that customers can trust.",
+      'Our mission remains simple: to keep Northern Alberta connected through reliable products, professional service, honest communication, and a commitment to the communities we call home.',
+    ],
+  },
+  {
+    id: 'kyle',
+    name: 'Kyle Hudson',
+    role: 'CO-FOUNDER & CHIEF OPERATING OFFICER',
+    email: 'kyle@pcinstalls.ca',
+    img: kyleImg,
+    alt: 'Kyle Hudson – Co-Founder & Chief Operating Officer, Peace Country Installations',
+    bio: [
+      'With experience in the telecommunications industry and a proven track record of building and operating successful businesses, Kyle Hudson co-founded Peace Country Installations alongside Dylan to provide reliable connectivity solutions to rural, remote, and hard-to-reach locations across Northern Alberta.',
+      'Throughout his career, Kyle has worked in telecommunications, technology deployment, and customer-focused service industries, developing a strong understanding of the challenges faced by individuals, businesses, and communities that operate outside traditional service areas. His entrepreneurial background has allowed him to successfully launch and manage multiple ventures while maintaining a commitment to professionalism, integrity, and customer satisfaction.',
+      'Outside of business, Kyle is deeply involved in public service. He serves as a Lieutenant with the Wembley Fire Department, where he assists with emergency response, training, and community safety initiatives. He is also actively involved with the Canadian Armed Forces and serves as the military liaison for local Army Cadets, helping mentor and develop the next generation of Canadian leaders through leadership, citizenship, and outdoor skills training.',
+      "An avid outdoorsman, Kyle spends much of his free time camping, exploring remote areas, and enjoying everything Canada has to offer. Through these experiences, he recognized the growing need for dependable communication solutions in locations where traditional services are limited or unavailable. This firsthand understanding of life and work in remote environments helped inspire the creation of Peace Country Installations and continues to drive the company's mission of keeping people connected wherever they are.",
+      'At Peace Country Installations, the goal is simple: deliver reliable communication solutions backed by real-world experience, exceptional service, and a deep understanding of the communities we serve.',
+    ],
+  },
+];
+---
+<Layout
+  title="About Peace Country Installations | Peace Country Installations"
+  description="Connecting Communities. Powering the North. To give back to the community by helping people stay connected through fair pricing, reliable installation of customer-provided Starlink systems and rural signal boosters."
+>
+  <PageHero image={heroImg} alt="About Peace Country Installations" title="About Peace Country Installations" lede="Connecting Communities. Powering the North." />
+
+  <section class="section pillars-wrap">
+    <div class="wrap pillars">
+      <div>
+        <h2>Mission Statement</h2>
+        <p class="lede">To keep Northern Alberta connected through reliable Starlink and communication solutions, fair pricing, professional installations, quality equipment, and dependable support backed by honest communication and local service.</p>
+      </div>
+      <div class="safety">
+        <h2>Safety Commitment</h2>
+        <p>All team members hold current fall arrest certifications and required safety tickets to ensure every installation is completed safely.</p>
+      </div>
+    </div>
+  </section>
+
+  {team.map((p) => (
+    <section class="section person" aria-labelledby={p.id}>
+      <div class="wrap person-grid">
+        <div class="portrait">
+          <Image src={p.img} alt={p.alt} widths={[360, 560, 800]} sizes="(min-width: 900px) 380px, 92vw" />
+        </div>
+        <div class="bio">
+          <h2 id={p.id}>{p.name}</h2>
+          <p class="role">{p.role}</p>
+          <p class="mail"><a href={`mailto:${p.email}`}>{p.email}</a></p>
+          {p.bio.map((para) => <p>{para}</p>)}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <CtaBand label="Request a Quote" />
+</Layout>
+
+<style>
+  .pillars-wrap { background: var(--surface); border-bottom: 1px solid var(--line); }
+  .pillars { display: grid; gap: 40px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .pillars { grid-template-columns: 1.5fr 1fr; gap: 72px; align-items: start; } }
+  .pillars h2 { font-size: 1.5rem; }
+  .safety { padding: 26px; border-radius: var(--r); background: var(--surface-2); }
+  .safety p { margin: 0; }
+  .person + .person { border-top: 1px solid var(--line); }
+  .person-grid { display: grid; gap: 36px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .person-grid { grid-template-columns: 380px 1fr; gap: 72px; } .portrait { position: sticky; top: 100px; align-self: start; } }
+  .portrait img { width: 100%; max-width: 420px; border-radius: var(--r); aspect-ratio: 4 / 5; object-fit: cover; object-position: top; }
+  .bio { max-width: 68ch; }
+  .role { font: 700 0.8rem/1.4 var(--font-head); letter-spacing: 0.1em; color: var(--accent-ink); margin-bottom: 4px; }
+  .mail { margin-bottom: 24px; }
+  .mail a { color: var(--muted); display: inline-block; padding-block: 4px; }
+</style>

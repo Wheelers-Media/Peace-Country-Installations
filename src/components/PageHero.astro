@@ -1,0 +1,23 @@
+---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props { image: ImageMetadata; alt: string; kicker?: string; title: string; lede?: string }
+const { image, alt, kicker, title, lede } = Astro.props;
+---
+<section class="page-hero photo-band">
+  <Picture src={image} alt={alt} formats={['avif', 'webp']} fallbackFormat="jpg" widths={[480, 768, 1024, 1440]} sizes="100vw" class="bg" loading="eager" fetchpriority="high" />
+  <div class="wrap inner">
+    {kicker && <p class="kicker reveal">{kicker}</p>}
+    <h1 class="reveal reveal-2">{title}</h1>
+    {lede && <p class="lede reveal reveal-2">{lede}</p>}
+    <div class="reveal reveal-3"><slot /></div>
+  </div>
+</section>
+
+<style>
+  .page-hero { min-height: 420px; display: flex; align-items: flex-end; }
+  .inner { padding-block: 88px 64px; }
+  h1 { max-width: 20ch; }
+  .lede { max-width: 64ch; margin-bottom: 24px; }
+</style>

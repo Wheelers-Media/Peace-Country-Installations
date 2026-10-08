@@ -1,0 +1,42 @@
+[
+  {
+    "url": "https://peacecountryinstallations.ca/",
+    "slug": "home",
+    "status": 200,
+    "title": "Starlink Installation Northern Alberta | Peace Country Installations",
+    "description": "Eliminate massive upfront equipment costs. Peace Country Installations delivers high-speed satellite internet to remote job sites, farms, and off-grid camps across Grande Prairie and the entire Peace Region with low monthly leasing options and flexible equipment rentals.",
+    "canonical": "https://peacecountryinstallations.ca/",
+    "og_title": "Starlink Installation Northern Alberta | Peace Country Installations",
+    "lang": "en"
+  },
+  {
+    "url": "https://peacecountryinstallations.ca/services",
+    "slug": "services",
+    "status": 200,
+    "title": "Comprehensive Connectivity Solutions | Peace Country Installations",
+    "description": "Peace Country Installations provides reliable Starlink, cellular booster, and remote communication solutions across Northern Alberta. We specialize in professional installations, affordable equipment rentals, and flexible lease to own programs.",
+    "canonical": "https://peacecountryinstallations.ca/services",
+    "og_title": "Comprehensive Connectivity Solutions | Peace Country Installations",
+    "lang": "en"
+  },
+  {
+    "url": "https://peacecountryinstallations.ca/about",
+    "slug": "about",
+    "status": 200,
+    "title": "About Peace Country Installations | Peace Country Installations",
+    "description": "Connecting Communities. Powering the North. To give back to the community by helping people stay connected through fair pricing, reliable installation of customer-provided Starlink systems and rural signal boosters.",
+    "canonical": "https://peacecountryinstallations.ca/about",
+    "og_title": "About Peace Country Installations | Peace Country Installations",
+    "lang": "en"
+  },
+  {
+    "url": "https://peacecountryinstallations.ca/store",
+    "slug": "store",
+    "status": 200,
+    "title": "Store - Starlink Hardware & Accessories | Peace Country Installations | Peace Country Installations",
+    "description": "Shop our inventory of genuine Starlink replacement parts, accessories, and hardware. Local pickup in Grande Prairie and delivery across Northern Alberta available.",
+    "canonical": "https://peacecountryinstallations.ca/store",
+    "og_title": "Store - Starlink Hardware & Accessories | Peace Country Installations | Peace Country Installations",
+    "lang": "en"
+  }
+]

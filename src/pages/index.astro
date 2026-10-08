@@ -1,0 +1,253 @@
+---
+import { Image, Picture } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import ProductCard from '../components/ProductCard.astro';
+import products from '../../capture/products.json';
+import { captureImage } from '../lib/images';
+import heroImg from '../../capture/assets/d73ca228-5531-47df-85d3-0f2bdb20a3ea.jpg';
+import leaseImg from '../../capture/assets/6a74c2d7b21ebe7e59e9001f.png';
+import rentalImg from '../../capture/assets/4b95c349-55a4-416d-a270-35f113c644c3.png';
+import installImg from '../../capture/assets/d146fa44-cee5-4038-a828-9e3f6a7ba4c2.png';
+import nickImg from '../../capture/assets/maxresdefault.jpg';
+import rochelleImg from '../../capture/assets/maxresdefault-2.jpg';
+import areaImg from '../../capture/assets/2ae76c2a-6cf0-4d0a-abff-0651be32798d.png';
+import quoteImg from '../../capture/assets/bc4bfbaa-9972-4a4f-afd7-5251c18a8703.png';
+
+const byCheckout = (url: string) => products.find((p) => p.checkout_url === url)!;
+const featured = [
+  { url: 'https://square.link/u/gMojEcwZ', name: 'Starlink Gen 3 Replacement Cable', features: ['Weather-sealed RJ45 connectors', 'Heavy-duty environmental shielding', '15m and 45m lengths available'] },
+  { url: 'https://square.link/u/lE1uwkUn', name: 'Starlink Gen 3 & Gen 4x Pivot Mount', features: ['Roof, wall, and fascia compatibility', 'Adjustable precision alignment base', 'Industrial weather-resistant coating'] },
+  { url: 'https://square.link/u/1iQaj7CG', name: 'Starlink Mini Magnetic Hard Shell Mount', features: ['High-speed highway stability rating', 'No-drill vehicle & tractor deployment', 'Rigid hard shell edge protection'] },
+];
+
+const stories = [
+  { id: '0xOpW8VQboM', img: nickImg, alt: 'Nick Hinks Video Thumbnail', name: 'Nick Hinks', place: 'Dawson Creek, BC' },
+  { id: '3ztcaWfDI4s', img: rochelleImg, alt: 'Customer Video Testimonial Thumbnail', name: 'Rochelle Foot', place: 'Foot Forward Contracting, Grimshaw, AB' },
+];
+
+const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodge', 'Hythe', 'Valleyview', 'Fairview', 'Spirit River', 'Rycroft', 'Falher', 'High Prairie', 'Fox Creek', 'Peace River'];
+---
+<Layout
+  title="Starlink Installation Northern Alberta | Peace Country Installations"
+  description="Eliminate massive upfront equipment costs. Peace Country Installations delivers high-speed satellite internet to remote job sites, farms, and off-grid camps across Grande Prairie and the entire Peace Region with low monthly leasing options and flexible equipment rentals."
+>
+  <!-- Hero -->
+  <section class="hero photo-band">
+    <Picture src={heroImg} alt="Starlink setup under northern lights in Northern Alberta" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[480, 768, 1024]} sizes="100vw" class="bg" loading="eager" fetchpriority="high" />
+    <div class="wrap hero-inner">
+      <p class="kicker reveal">LEASE TO OWN FINANCING AVAILABLE</p>
+      <h1 class="reveal reveal-2">Starlink Installation Northern Alberta</h1>
+      <p class="lede reveal reveal-2">Eliminate massive upfront equipment costs. Peace Country Installations delivers high-speed satellite internet to remote job sites, farms, and off-grid camps across Grande Prairie and the entire Peace Region with low monthly leasing options and flexible equipment rentals.</p>
+      <div class="btns reveal reveal-3">
+        <a class="btn btn-primary" href="#quote">REQUEST A FREE QUOTE</a>
+        <a class="btn btn-ghost" href="#rentals">EQUIPMENT RENTALS AVAILABLE</a>
+      </div>
+      <p class="footnote reveal reveal-3">* Free Quotes Available for all setups, rentals, and installations.</p>
+    </div>
+  </section>
+
+  <!-- Value strip -->
+  <section class="values" aria-label="Why Peace Country Installations">
+    <ul class="wrap">
+      <li><h2>No Large Upfront Costs</h2><p>Affordable Lease-To-Own programs</p></li>
+      <li><h2>Available 24/7</h2><p>Round-the-clock support &amp; service</p></li>
+      <li><h2>Locally Owned</h2><p>Serving the Peace Country region</p></li>
+    </ul>
+  </section>
+
+  <!-- Solutions -->
+  <section id="services" class="section">
+    <div class="wrap">
+      <h2>Our Connectivity Solutions</h2>
+      <p class="lede">Expert solutions designed specifically for Northern Alberta's unique geographical challenges.</p>
+      <div class="bento">
+        <article class="tile tile-main">
+          <Image src={leaseImg} alt="Starlink mounted on house roof under starry northern sky" widths={[480, 800, 1200]} sizes="(min-width: 960px) 640px, 92vw" />
+          <div class="tile-body">
+            <p class="badge">Most Popular</p>
+            <h3>Starlink Lease-to-Own</h3>
+            <p>Focus on affordability, breaking down barriers to getting connected without huge initial hardware investments. Ideal for permanent residential, farm, and business setups.</p>
+            <a class="btn btn-primary" href="#quote">GET STARTED</a>
+          </div>
+        </article>
+        <article class="tile" id="rentals">
+          <Image src={rentalImg} alt="Equipment Rentals" widths={[400, 640]} sizes="(min-width: 960px) 460px, 92vw" />
+          <div class="tile-body">
+            <h3>Equipment Rentals</h3>
+            <p>Temporary, cost-effective connectivity solutions for remote job sites, work camps, events, and seasonal off-grid projects. Delivery and pickup available.</p>
+            <a class="link" href="#quote">INQUIRE ABOUT RENTALS</a>
+          </div>
+        </article>
+        <article class="tile">
+          <Image src={installImg} alt="Professional Starlink Installation in Northern Alberta" widths={[400, 640]} sizes="(min-width: 960px) 460px, 92vw" />
+          <div class="tile-body">
+            <h3>Professional Installation</h3>
+            <p>Expert installation services for Starlink systems, cellular signal boosters, and custom remote communication infrastructures.</p>
+            <a class="link" href="#quote">BOOK INSTALLATION</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer stories -->
+  <section class="section stories">
+    <div class="wrap">
+      <h2>Real Customer Stories</h2>
+      <p class="lede">Hear directly from homes, farms, and businesses we've connected across the Peace Region.</p>
+      <div class="story-grid">
+        {stories.map((s) => (
+          <figure class="story">
+            <a class="yt" href={`https://www.youtube.com/watch?v=${s.id}`} data-yt={s.id} target="_blank" rel="noopener" aria-label={`Play video: ${s.name}`}>
+              <Image src={s.img} alt={s.alt} widths={[480, 720]} sizes="(min-width: 900px) 560px, 92vw" />
+              <span class="play" aria-hidden="true"></span>
+            </a>
+            <figcaption><h3>{s.name}</h3><p>{s.place}</p></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="section reviews">
+    <div class="wrap">
+      <h2>Trusted by Northern Alberta</h2>
+      <p class="lede">See our live Google reviews from homes, farms, and businesses across the Peace Region.</p>
+      <iframe class="review-frame" src="https://reputationhub.site/reputation/widgets/review_widget/rvJp0568pMpA6ZaQKLer" title="Google reviews for Peace Country Installations" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <!-- Service area -->
+  <section id="areas" class="section area">
+    <div class="wrap area-grid">
+      <div>
+        <h2>Serving Grande Prairie and the Entire Peace Country Region</h2>
+        <p>We provide delivery and professional installation throughout Northern Alberta. Our core service locations include:</p>
+        <ul class="towns">{towns.map((t) => <li>{t}</li>)}</ul>
+        <p class="muted">and surrounding rural or off-grid communities.</p>
+        <div class="logistics">
+          <h3>Logistics &amp; Delivery</h3>
+          <p>Pickup options are available. Delivery rates vary outside Grande Prairie. Security deposits may apply based on equipment selection.</p>
+          <a class="link" href="https://www.facebook.com/profile.php?id=61583161493114" target="_blank" rel="noopener">Follow Us on Facebook</a>
+        </div>
+      </div>
+      <Image src={areaImg} alt="Sunset over the Peace River valley in Northern Alberta" widths={[480, 800, 1200]} sizes="(min-width: 960px) 540px, 92vw" class="area-img" />
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section id="quote" class="section photo-band quote">
+    <Image src={quoteImg} alt="" widths={[640, 896]} sizes="100vw" class="bg" />
+    <div class="wrap quote-grid">
+      <div>
+        <h2>Get Your Free Estimate &amp; Quote Today</h2>
+        <p class="lede">No pricing is one-size-fits-all. Tell us about your location and communication needs, and our local team will build a custom package for you.</p>
+        <p class="call"><a href="tel:5874160303">Call 24/7: 587-416-0303</a></p>
+      </div>
+      <QuoteForm />
+    </div>
+  </section>
+
+  <!-- Hardware -->
+  <section class="section">
+    <div class="wrap">
+      <h2>Essential Starlink Hardware &amp; Regional Spare Parts</h2>
+      <p class="lede">We maintain a live inventory of genuine OEM replacements and heavy-duty mounts across our Grande Prairie regional nodes for rapid field deployment.</p>
+      <div class="product-grid">
+        {featured.map((f) => {
+          const p = byCheckout(f.url);
+          return <ProductCard image={captureImage(p.image_path)} alt={f.name} name={f.name} stock="In Stock - Grande Prairie" category="Starlink Hardware & Accessories" features={f.features} buyLabel="BUY NOW" href={p.checkout_url} />;
+        })}
+      </div>
+      <p class="parts-note">Need a part not listed, or looking for certified Starlink Installation in Northern Alberta? Contact local dispatch immediately: <a href="#quote">REQUEST A FREE QUOTE</a></p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Swap the YouTube thumbnail for the player only when asked (keeps ~1 MB of YouTube JS off page load).
+  document.querySelectorAll<HTMLAnchorElement>('a[data-yt]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const f = document.createElement('iframe');
+      f.src = `https://www.youtube-nocookie.com/embed/${a.dataset.yt}?autoplay=1&rel=0`;
+      f.title = a.getAttribute('aria-label')?.replace('Play video: ', 'Customer story: ') ?? 'Customer story';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      f.className = 'yt-frame';
+      a.replaceWith(f);
+    });
+  });
+</script>
+
+<style>
+  .hero { min-height: min(88dvh, 760px); display: flex; align-items: center; }
+  .hero-inner { padding-block: 72px 88px; }
+  .hero h1 { max-width: 14ch; font-size: clamp(2.3rem, 1.4rem + 4vw, 4.2rem); }
+  .hero .lede { max-width: 56ch; margin-bottom: 28px; font-size: clamp(1rem, 0.9rem + 0.5vw, 1.15rem); }
+  .footnote { margin: 22px 0 0; font-size: 0.85rem; color: #b8c4d2; }
+
+  .values { background: var(--surface); border-bottom: 1px solid var(--line); }
+  .values ul { display: grid; grid-template-columns: 1fr; }
+  .values li { padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .values li:last-child { border-bottom: 0; }
+  .values h2 { font-size: 1.05rem; margin-bottom: 4px; }
+  .values p { margin: 0; color: var(--muted); }
+  @media (min-width: 760px) {
+    .values ul { grid-template-columns: repeat(3, 1fr); }
+    .values li { padding: 30px 28px; border-bottom: 0; border-left: 1px solid var(--line); }
+    .values li:first-child { border-left: 0; padding-left: 0; }
+  }
+
+  .bento { display: grid; gap: 20px; margin-top: 40px; grid-template-columns: 1fr; }
+  @media (min-width: 960px) {
+    .bento { grid-template-columns: 1.35fr 1fr; grid-template-rows: auto auto; }
+    .tile-main { grid-row: span 2; }
+  }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; }
+  .tile img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+  .tile-main img { aspect-ratio: 4 / 3; flex: 1; }
+  .tile-body { padding: 24px; }
+  .tile-body p { color: var(--muted); }
+  .tile-main .tile-body { padding: 28px; }
+  .tile-main h3 { font-size: 1.6rem; }
+  .tile-body .badge { display: inline-block; margin-bottom: 10px; padding: 4px 10px; border-radius: var(--r-sm); background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--accent-ink); font: 700 0.75rem/1.4 var(--font-head); letter-spacing: 0.06em; text-transform: uppercase; }
+  .link { font: 700 0.85rem/1.4 var(--font-head); letter-spacing: 0.04em; color: var(--accent-ink); text-underline-offset: 4px; display: inline-block; padding-block: 8px; }
+  .link::after { content: ' →'; }
+
+  .story-grid { display: grid; gap: 28px; margin-top: 36px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .story-grid { grid-template-columns: 1fr 1fr; } }
+  .story { margin: 0; }
+  .yt { position: relative; display: block; border-radius: var(--r); overflow: hidden; aspect-ratio: 16 / 9; background: var(--night); }
+  .yt img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+  .yt:hover img { transform: scale(1.03); }
+  .play { position: absolute; inset: 0; margin: auto; width: 72px; height: 72px; border-radius: 50%; background: var(--accent); box-shadow: 0 10px 30px rgb(0 0 0 / 0.35); }
+  .play::after { content: ''; position: absolute; left: 29px; top: 23px; border-left: 20px solid var(--on-accent); border-top: 13px solid transparent; border-bottom: 13px solid transparent; }
+  :global(.yt-frame) { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: var(--r); display: block; }
+  .story figcaption { padding-top: 16px; }
+  .story h3 { margin-bottom: 2px; }
+  .story p { margin: 0; color: var(--muted); }
+
+  .reviews { background: var(--surface); border-block: 1px solid var(--line); }
+  .review-frame { width: 100%; height: 560px; border: 0; margin-top: 28px; border-radius: var(--r); background: #fff; }
+
+  .area-grid { display: grid; gap: 40px; align-items: center; grid-template-columns: 1fr; }
+  @media (min-width: 960px) { .area-grid { grid-template-columns: 1.1fr 1fr; gap: 64px; } }
+  .towns { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 10px; }
+  .towns li { padding: 6px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); font-size: 0.9rem; font-weight: 500; }
+  .logistics { margin-top: 28px; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+  .logistics p { color: var(--muted); }
+  .area-img { width: 100%; border-radius: var(--r); aspect-ratio: 4 / 5; object-fit: cover; }
+
+  .quote-grid { display: grid; gap: 40px; align-items: start; grid-template-columns: 1fr; }
+  @media (min-width: 960px) { .quote-grid { grid-template-columns: 0.8fr 1.2fr; gap: 64px; } .quote-grid > div:first-child { position: sticky; top: 110px; } }
+  .call { font: 700 1.1rem/1.4 var(--font-head); }
+  .call a { color: var(--accent); }
+
+  .product-grid { display: grid; gap: 22px; margin-top: 40px; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+  .parts-note { margin: 36px 0 0; color: var(--muted); }
+  .parts-note a { color: var(--accent-ink); font-weight: 700; }
+</style>
