@@ -6,8 +6,8 @@ import ProductCard from '../components/ProductCard.astro';
 import products from '../../capture/products.json';
 import { captureImage } from '../lib/images';
 import heroImg from '../assets/hero-truck-aurora.webp';
+import rentalImg from '../assets/starlink-rental-installation.jpg';
 import leaseImg from '../../capture/assets/6a74c2d7b21ebe7e59e9001f.png';
-import rentalImg from '../../capture/assets/4b95c349-55a4-416d-a270-35f113c644c3.png';
 import installImg from '../../capture/assets/d146fa44-cee5-4038-a828-9e3f6a7ba4c2.png';
 import nickImg from '../../capture/assets/maxresdefault.jpg';
 import rochelleImg from '../../capture/assets/maxresdefault-2.jpg';
@@ -36,14 +36,12 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
   <section class="hero photo-band">
     <Picture src={heroImg} alt="Peace Country Installations truck under the northern lights beside a canola field in Northern Alberta" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[480, 768, 1024, 1440]} sizes="100vw" class="bg" loading="eager" fetchpriority="high" />
     <div class="wrap hero-inner">
-      <p class="kicker reveal">LEASE TO OWN FINANCING AVAILABLE</p>
-      <h1 class="reveal reveal-2">Starlink Installation Northern Alberta</h1>
-      <p class="lede reveal reveal-2">Eliminate massive upfront equipment costs. Peace Country Installations delivers high-speed satellite internet to remote job sites, farms, and off-grid camps across Grande Prairie and the entire Peace Region with low monthly leasing options and flexible equipment rentals.</p>
+      <h1 class="reveal reveal-2">Starlink internet across Northern Alberta.</h1>
+      <p class="lede reveal reveal-2">Bring reliable Starlink internet to your rural home, farm, or remote worksite. Our local team handles installation, with lease-to-own and rental options available.</p>
       <div class="btns reveal reveal-3">
         <a class="btn btn-primary" href="#quote">REQUEST A FREE QUOTE</a>
-        <a class="btn btn-ghost" href="#rentals">EQUIPMENT RENTALS AVAILABLE</a>
+        <a class="btn btn-ghost" href="#rentals">EXPLORE EQUIPMENT RENTALS</a>
       </div>
-      <p class="footnote reveal reveal-3">* Free Quotes Available for all setups, rentals, and installations.</p>
     </div>
   </section>
 
@@ -72,7 +70,7 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
           </div>
         </article>
         <article class="tile" id="rentals">
-          <Image src={rentalImg} alt="Equipment Rentals" widths={[400, 640]} sizes="(min-width: 960px) 460px, 92vw" />
+          <Image src={rentalImg} alt="Starlink dish installed at an industrial site at night" widths={[400, 640]} sizes="(min-width: 960px) 460px, 92vw" />
           <div class="tile-body">
             <h3>Equipment Rentals</h3>
             <p>Temporary, cost-effective connectivity solutions for remote job sites, work camps, events, and seasonal off-grid projects. Delivery and pickup available.</p>
@@ -196,12 +194,12 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
   .hero :global(.bg) { object-position: 30% center; }
   @media (min-width: 960px) {
     .hero::before { background: linear-gradient(260deg, rgb(8 15 26 / 0.92) 0%, rgb(8 15 26 / 0.7) 45%, rgb(8 15 26 / 0.05) 80%); }
-    .hero-inner { display: flex; flex-direction: column; align-items: flex-start; padding-left: max(52%, var(--gutter)); }
+    .hero-inner { display: flex; flex-direction: column; align-items: flex-start; padding-left: max(46%, var(--gutter)); }
   }
   .hero-inner { padding-block: 72px 88px; }
-  .hero h1 { max-width: 14ch; font-size: clamp(2.3rem, 1.4rem + 4vw, 4.2rem); }
+  .hero h1 { font-size: clamp(2.3rem, 1.4rem + 3.4vw, 3.4rem); }
   .hero .lede { max-width: 56ch; margin-bottom: 28px; font-size: clamp(1rem, 0.9rem + 0.5vw, 1.15rem); }
-  .footnote { margin: 22px 0 0; font-size: 0.85rem; color: #b8c4d2; }
+  #rentals img { object-position: 50% 72%; }
 
   .values { background: var(--surface); border-bottom: 1px solid var(--line); }
   .values ul { display: grid; grid-template-columns: 1fr; }
