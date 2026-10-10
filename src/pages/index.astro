@@ -5,7 +5,7 @@ import QuoteForm from '../components/QuoteForm.astro';
 import ProductCard from '../components/ProductCard.astro';
 import products from '../../capture/products.json';
 import { captureImage } from '../lib/images';
-import heroImg from '../../capture/assets/d73ca228-5531-47df-85d3-0f2bdb20a3ea.jpg';
+import heroImg from '../assets/hero-truck-aurora.webp';
 import leaseImg from '../../capture/assets/6a74c2d7b21ebe7e59e9001f.png';
 import rentalImg from '../../capture/assets/4b95c349-55a4-416d-a270-35f113c644c3.png';
 import installImg from '../../capture/assets/d146fa44-cee5-4038-a828-9e3f6a7ba4c2.png';
@@ -34,7 +34,7 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
 >
   <!-- Hero -->
   <section class="hero photo-band">
-    <Picture src={heroImg} alt="Starlink setup under northern lights in Northern Alberta" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[480, 768, 1024]} sizes="100vw" class="bg" loading="eager" fetchpriority="high" />
+    <Picture src={heroImg} alt="Peace Country Installations truck under the northern lights beside a canola field in Northern Alberta" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[480, 768, 1024, 1440]} sizes="100vw" class="bg" loading="eager" fetchpriority="high" />
     <div class="wrap hero-inner">
       <p class="kicker reveal">LEASE TO OWN FINANCING AVAILABLE</p>
       <h1 class="reveal reveal-2">Starlink Installation Northern Alberta</h1>
@@ -115,7 +115,7 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
     <div class="wrap">
       <h2>Trusted by Northern Alberta</h2>
       <p class="lede">See our live Google reviews from homes, farms, and businesses across the Peace Region.</p>
-      <iframe class="review-frame" src="https://reputationhub.site/reputation/widgets/review_widget/rvJp0568pMpA6ZaQKLer" title="Google reviews for Peace Country Installations" loading="lazy"></iframe>
+      <iframe class="review-frame lc_reviews_widget" height="560" src="https://reputationhub.site/reputation/widgets/review_widget/rvJp0568pMpA6ZaQKLer" title="Google reviews for Peace Country Installations" loading="lazy"></iframe>
     </div>
   </section>
 
@@ -167,6 +167,15 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
 </Layout>
 
 <script>
+  // Size the reviews iframe to its content (same message the vendor's review-widget.js listens for),
+  // so no white iframe body shows below the widget.
+  window.addEventListener('message', (e) => {
+    if (e.origin !== 'https://reputationhub.site' || !Array.isArray(e.data) || e.data[0] !== 'lc.setHeight') return;
+    const h = Number(e.data[1]?.height);
+    const frame = document.querySelector<HTMLIFrameElement>('.lc_reviews_widget');
+    if (frame && h > 0) frame.height = String(h);
+  });
+
   // Swap the YouTube thumbnail for the player only when asked (keeps ~1 MB of YouTube JS off page load).
   document.querySelectorAll<HTMLAnchorElement>('a[data-yt]').forEach((a) => {
     a.addEventListener('click', (e) => {
@@ -183,6 +192,12 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
 
 <style>
   .hero { min-height: min(88dvh, 760px); display: flex; align-items: center; }
+  /* Truck sits on the left of the photo, so copy and scrim go right on wide screens. */
+  .hero :global(.bg) { object-position: 30% center; }
+  @media (min-width: 960px) {
+    .hero::before { background: linear-gradient(260deg, rgb(8 15 26 / 0.92) 0%, rgb(8 15 26 / 0.7) 45%, rgb(8 15 26 / 0.05) 80%); }
+    .hero-inner { display: flex; flex-direction: column; align-items: flex-start; padding-left: max(52%, var(--gutter)); }
+  }
   .hero-inner { padding-block: 72px 88px; }
   .hero h1 { max-width: 14ch; font-size: clamp(2.3rem, 1.4rem + 4vw, 4.2rem); }
   .hero .lede { max-width: 56ch; margin-bottom: 28px; font-size: clamp(1rem, 0.9rem + 0.5vw, 1.15rem); }
@@ -229,8 +244,10 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
   .story h3 { margin-bottom: 2px; }
   .story p { margin: 0; color: var(--muted); }
 
-  .reviews { background: var(--surface); border-block: 1px solid var(--line); }
-  .review-frame { width: 100%; height: 560px; border: 0; margin-top: 28px; border-radius: var(--r); background: #fff; }
+  /* Matches the widget's own #0B1528 background so the embed reads as part of the page. */
+  .reviews { background: #0b1528; color: #f1f5f9; }
+  .reviews .lede { color: #c5cfdb; }
+  .review-frame { width: 100%; border: 0; margin-top: 28px; background: #0b1528; display: block; }
 
   .area-grid { display: grid; gap: 40px; align-items: center; grid-template-columns: 1fr; }
   @media (min-width: 960px) { .area-grid { grid-template-columns: 1.1fr 1fr; gap: 64px; } }

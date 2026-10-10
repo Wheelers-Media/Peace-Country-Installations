@@ -4,7 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
 import heroImg from '../../capture/assets/2ae76c2a-6cf0-4d0a-abff-0651be32798d.png';
-import dylanImg from '../../capture/assets/b203b193-5401-4551-90c5-2499b76f1815.jpg';
+import dylanImg from '../assets/dylan-nixon.jpg';
 import kyleImg from '../../capture/assets/6f23a532-3b18-4c19-ae24-c1541631f0a5.png';
 
 const team = [
@@ -90,7 +90,7 @@ const team = [
   .person + .person { border-top: 1px solid var(--line); }
   .person-grid { display: grid; gap: 36px; grid-template-columns: 1fr; }
   @media (min-width: 900px) { .person-grid { grid-template-columns: 380px 1fr; gap: 72px; } .portrait { position: sticky; top: 100px; align-self: start; } }
-  .portrait img { width: 100%; max-width: 420px; border-radius: var(--r); aspect-ratio: 4 / 5; object-fit: cover; object-position: top; }
+  .portrait img { width: 100%; max-width: 420px; border-radius: var(--r); aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
   .bio { max-width: 68ch; }
   .role { font: 700 0.8rem/1.4 var(--font-head); letter-spacing: 0.1em; color: var(--accent-ink); margin-bottom: 4px; }
   .mail { margin-bottom: 24px; }
