@@ -1,0 +1,174 @@
+---
+// Slide-out cart. The header button (#cart-btn, #cart-count) lives in Layout.astro; product cards fire 'cart:add'.
+---
+<dialog id="cart-drawer" class="cart" aria-labelledby="cart-title">
+  <div class="panel">
+    <header>
+      <h2 id="cart-title">Your Cart</h2>
+      <button type="button" class="close" id="cart-close" aria-label="Close cart">&times;</button>
+    </header>
+
+    <p id="cart-empty" class="empty">Your cart is empty. Add something from the store to get started.</p>
+    <ul id="cart-lines" class="lines"></ul>
+
+    <footer id="cart-foot">
+      <p class="subtotal"><span>Subtotal</span><strong id="cart-subtotal">$0.00</strong></p>
+      <p class="gst">GST (5%) is added at checkout. Delivery or pickup is arranged after your order.</p>
+      <p id="cart-error" class="error" role="alert" hidden></p>
+      <button type="button" class="btn btn-primary btn-block" id="cart-checkout">Checkout</button>
+    </footer>
+  </div>
+</dialog>
+
+<script>
+  import { loadCart, saveCart, addLine, setQty, removeLine, cartDetails, subtotalCents } from '../lib/cart.js';
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const drawer = $<HTMLDialogElement>('cart-drawer');
+  const list = $<HTMLUListElement>('cart-lines');
+  const empty = $('cart-empty');
+  const foot = $('cart-foot');
+  const subtotal = $('cart-subtotal');
+  const error = $('cart-error');
+  const checkout = $<HTMLButtonElement>('cart-checkout');
+  const openBtn = document.getElementById('cart-btn');
+  const count = document.getElementById('cart-count');
+
+  const money = (cents: number) => `$${(cents / 100).toFixed(2)}`;
+  const CALL_US = "We couldn't start checkout. Please try again or call 587-416-0303.";
+
+  let cart = loadCart();
+  // Square sends customers back to /store?thanks=1 after paying: the order is done, so empty the cart.
+  if (new URLSearchParams(location.search).get('thanks') === '1') {
+    cart = [];
+    saveCart(cart);
+  }
+
+  function button(label: string, text: string, onClick: () => void) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'qty-btn';
+    b.setAttribute('aria-label', label);
+    b.textContent = text;
+    b.addEventListener('click', onClick);
+    return b;
+  }
+
+  function update(next: typeof cart) {
+    cart = next;
+    saveCart(cart);
+    render();
+  }
+
+  function render() {
+    const details = cartDetails(cart);
+    const total = details.reduce((n, l) => n + l.qty, 0);
+    if (count) {
+      count.textContent = String(total);
+      count.hidden = total === 0;
+    }
+    openBtn?.setAttribute('aria-label', `Open cart, ${total} item${total === 1 ? '' : 's'}`);
+
+    list.replaceChildren();
+    for (const l of details) {
+      const li = document.createElement('li');
+      const name = document.createElement('p');
+      name.className = 'name';
+      name.textContent = l.name;
+      const price = document.createElement('p');
+      price.className = 'price';
+      price.textContent = money(l.cents * l.qty);
+      const controls = document.createElement('div');
+      controls.className = 'controls';
+      const qty = document.createElement('span');
+      qty.className = 'qty';
+      qty.textContent = String(l.qty);
+      qty.setAttribute('aria-live', 'polite');
+      controls.append(
+        button(`Decrease quantity of ${l.name}`, '−', () => update(setQty(cart, l.id, l.variant, l.qty - 1))),
+        qty,
+        button(`Increase quantity of ${l.name}`, '+', () => update(setQty(cart, l.id, l.variant, l.qty + 1))),
+        Object.assign(button(`Remove ${l.name}`, 'Remove', () => update(removeLine(cart, l.id, l.variant))), { className: 'qty-btn remove' }),
+      );
+      li.append(name, price, controls);
+      list.append(li);
+    }
+    empty.hidden = details.length > 0;
+    foot.hidden = details.length === 0;
+    subtotal.textContent = money(subtotalCents(cart));
+    error.hidden = true;
+  }
+
+  async function startCheckout() {
+    checkout.disabled = true;
+    checkout.textContent = 'Starting checkout…';
+    error.hidden = true;
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: cart.map(({ id, variant, qty }) => ({ id, variant, qty })) }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.url) {
+        location.href = data.url;
+        return;
+      }
+      error.textContent = res.status === 400 && data.error ? data.error : CALL_US;
+    } catch {
+      error.textContent = CALL_US;
+    }
+    error.hidden = false;
+    checkout.disabled = false;
+    checkout.textContent = 'Checkout';
+  }
+
+  window.addEventListener('cart:add', (e) => {
+    const { id, variant } = (e as CustomEvent).detail;
+    update(addLine(cart, id, variant ?? null));
+    if (!drawer.open) drawer.showModal();
+  });
+  openBtn?.addEventListener('click', () => drawer.showModal());
+  $('cart-close').addEventListener('click', () => drawer.close());
+  drawer.addEventListener('click', (e) => { if (e.target === drawer) drawer.close(); }); // backdrop click
+  checkout.addEventListener('click', startCheckout);
+  // Coming back from Square with the browser Back button restores the page from cache: reset the button.
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) {
+      checkout.disabled = false;
+      checkout.textContent = 'Checkout';
+      cart = loadCart();
+      render();
+    }
+  });
+
+  render();
+</script>
+
+<style is:global>
+  /* Global (but prefixed with .cart) because the line items and buttons are created at runtime, where Astro's scoped styles don't reach. */
+  .cart { margin: 0 0 0 auto; padding: 0; border: 0; width: min(420px, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; background: var(--surface); color: var(--ink); box-shadow: -18px 0 40px rgb(11 20 34 / 0.25); }
+  .cart::backdrop { background: rgb(11 20 34 / 0.55); }
+  .cart .panel { display: flex; flex-direction: column; height: 100%; }
+  .cart header { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; border-bottom: 1px solid var(--line); }
+  .cart header h2 { font-size: 1.15rem; margin: 0; }
+  .cart .close { width: 44px; height: 44px; font-size: 1.8rem; line-height: 1; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); color: inherit; cursor: pointer; }
+  .cart .close:hover { border-color: var(--accent-ink); }
+  .cart .empty { padding: 28px 22px; color: var(--muted); }
+  .cart .lines { flex: 1; overflow-y: auto; margin: 0; padding: 0; list-style: none; }
+  .cart .lines li { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; padding: 16px 22px; border-bottom: 1px solid var(--line); }
+  .cart .name { margin: 0; font-weight: 600; }
+  .cart .price { margin: 0; font-variant-numeric: tabular-nums; font-weight: 700; }
+  .cart .controls { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; }
+  .cart .qty { min-width: 2ch; text-align: center; font-variant-numeric: tabular-nums; font-weight: 700; }
+  .cart .qty-btn { min-width: 44px; height: 44px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); color: inherit; font-size: 1.1rem; font-weight: 700; cursor: pointer; }
+  .cart .qty-btn:hover { border-color: var(--accent-ink); }
+  .cart .qty-btn.remove { margin-left: auto; padding-inline: 12px; font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+  .cart footer { padding: 18px 22px 22px; border-top: 1px solid var(--line); }
+  .cart .subtotal { display: flex; justify-content: space-between; margin: 0 0 6px; font-size: 1.1rem; }
+  .cart .gst { margin: 0 0 14px; font-size: 0.85rem; color: var(--muted); }
+  .cart .error { margin: 0 0 12px; padding: 10px 12px; border-radius: var(--r-sm); background: #fde8e8; color: #7a1414; font-size: 0.9rem; }
+  .cart #cart-checkout:disabled { opacity: 0.6; cursor: progress; }
+  .cart [hidden] { display: none; }
+  @media (prefers-reduced-motion: no-preference) { .cart[open] { animation: cart-slide 0.25s var(--ease); } @keyframes cart-slide { from { transform: translateX(24px); opacity: 0; } } }
+</style>
