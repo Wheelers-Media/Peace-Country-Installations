@@ -70,10 +70,10 @@
     "checkout_http_status": 200
   },
   {
-    "name": "Starlink Mini 12V Car Adapter",
+    "name": "Starlink Mini 12V DC Cable with 30V Booster",
     "price": "$35.00",
-    "description": "Power your Starlink Mini directly from your work truck or tractor. Essential 12V mobile connectivity with an integrated power switch for remote job sites in Northern Alberta.",
-    "image_path": "assets/73f9ce15-bf37-4d86-9311-a6849eddffe0.png",
+    "description": "Power your Starlink Mini directly from your vehicle's 12V power system. The built-in 30V voltage booster helps maintain stable power delivery, reducing unexpected reboots and connection dropouts when vehicle battery voltage fluctuates. Keep your Starlink Mini powered and connected wherever the job takes you.",
+    "image_path": "assets/12v-cable-30v-booster.png",
     "image_url": "https://vibe.filesafe.space/1781023829760199801/attachments/73f9ce15-bf37-4d86-9311-a6849eddffe0.png",
     "buy_button_label": "BUY NOW",
     "checkout_url": "https://square.link/u/D7IQ5OPK",

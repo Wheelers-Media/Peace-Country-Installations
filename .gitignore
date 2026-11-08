@@ -6,3 +6,4 @@ dist/
 .claude/
 site-capture/.venv/
 __pycache__/
+.superpowers/
