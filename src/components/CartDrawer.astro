@@ -8,6 +8,7 @@
       <button type="button" class="close" id="cart-close" aria-label="Close cart">&times;</button>
     </header>
 
+    <p id="cart-status" class="visually-hidden" role="status"></p>
     <p id="cart-empty" class="empty">Your cart is empty. Add something from the store to get started.</p>
     <ul id="cart-lines" class="lines"></ul>
 
@@ -44,20 +45,33 @@
     saveCart(cart);
   }
 
-  function button(label: string, text: string, onClick: () => void) {
+  function button(label: string, text: string, key: string, onClick: () => void) {
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'qty-btn';
     b.setAttribute('aria-label', label);
+    b.dataset.key = key;
     b.textContent = text;
     b.addEventListener('click', onClick);
     return b;
   }
 
-  function update(next: typeof cart) {
+  const status = $('cart-status');
+
+  // render() rebuilds the list, which would drop keyboard focus to <body>: put it back on the same control
+  // (or, if that line is gone, the first remaining control, or the close button), and announce the change.
+  function update(next: typeof cart, focusKey?: string) {
     cart = next;
     saveCart(cart);
     render();
+    const items = cartDetails(cart).reduce((n, l) => n + l.qty, 0);
+    status.textContent = items === 0
+      ? 'Your cart is empty.'
+      : `Cart updated: ${items} item${items === 1 ? '' : 's'}, subtotal ${money(subtotalCents(cart))}.`;
+    if (focusKey !== undefined) {
+      const target = list.querySelector<HTMLElement>(`[data-key="${focusKey}"]`) ?? list.querySelector<HTMLElement>('.qty-btn') ?? $('cart-close');
+      target.focus();
+    }
   }
 
   function render() {
@@ -83,12 +97,12 @@
       const qty = document.createElement('span');
       qty.className = 'qty';
       qty.textContent = String(l.qty);
-      qty.setAttribute('aria-live', 'polite');
+      const key = `${l.id}|${l.variant ?? ''}`;
       controls.append(
-        button(`Decrease quantity of ${l.name}`, '−', () => update(setQty(cart, l.id, l.variant, l.qty - 1))),
+        button(`Decrease quantity of ${l.name}`, '−', `${key}|dec`, () => update(setQty(cart, l.id, l.variant, l.qty - 1), `${key}|dec`)),
         qty,
-        button(`Increase quantity of ${l.name}`, '+', () => update(setQty(cart, l.id, l.variant, l.qty + 1))),
-        Object.assign(button(`Remove ${l.name}`, 'Remove', () => update(removeLine(cart, l.id, l.variant))), { className: 'qty-btn remove' }),
+        button(`Increase quantity of ${l.name}`, '+', `${key}|inc`, () => update(setQty(cart, l.id, l.variant, l.qty + 1), `${key}|inc`)),
+        Object.assign(button(`Remove ${l.name}`, 'Remove', `${key}|rm`, () => update(removeLine(cart, l.id, l.variant), `${key}|rm`)), { className: 'qty-btn remove' }),
       );
       li.append(name, price, controls);
       list.append(li);

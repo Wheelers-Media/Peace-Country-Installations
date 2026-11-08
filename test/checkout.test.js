@@ -88,6 +88,24 @@ test('POST answers 502 with a generic message when Square fails or returns no ur
   }
 });
 
+test('POST logs Square error codes and details server-side, never the token', async () => {
+  const logged = [];
+  const realError = console.error;
+  console.error = (...a) => logged.push(a.join(' '));
+  try {
+    stubFetch(400, { errors: [{ category: 'INVALID_REQUEST_ERROR', code: 'INVALID_VALUE', detail: 'bad location field' }] });
+    const res = await post({ items: [{ id: MOUNT, qty: 1 }] });
+    assert.equal(res.status, 502);
+  } finally {
+    console.error = realError;
+  }
+  const text = logged.join('\n');
+  assert.match(text, /400/);
+  assert.match(text, /INVALID_VALUE/);
+  assert.match(text, /bad location field/);
+  assert.ok(!text.includes('tok_secret'));
+});
+
 test('POST answers 500 when Square env vars are missing', async () => {
   delete process.env.SQUARE_ACCESS_TOKEN;
   stubFetch(200, {});

@@ -66,7 +66,12 @@ export async function POST(request) {
     const data = await res.json().catch(() => ({}));
     const url = data?.payment_link?.url;
     if (!res.ok || !url) {
-      console.error(`checkout: Square responded ${res.status}`);
+      // Status plus Square's own error codes/details (no secrets in them) so a rejection can be diagnosed from the Vercel logs.
+      const detail = (Array.isArray(data?.errors) ? data.errors : [])
+        .map((e) => `${e.code ?? 'UNKNOWN'}: ${e.detail ?? ''}`)
+        .join('; ')
+        .slice(0, 500);
+      console.error(`checkout: Square responded ${res.status} ${detail}`.trim());
       return Response.json({ error: 'Checkout is unavailable right now.' }, { status: 502 });
     }
     return Response.json({ url });
