@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import ProductCard from '../components/ProductCard.astro';
 import products from '../../capture/products.json';
 import { captureImage } from '../lib/images';
+import { catalog } from '../lib/catalog.js';
 import heroImg from '../../capture/assets/d73ca228-5531-47df-85d3-0f2bdb20a3ea.jpg';
 
 // Category + feature bullets per product, verbatim from capture/content/store.md.
@@ -19,7 +20,10 @@ const extras: Record<string, { category: string; features: string[] }> = {
   'Starlink Mini Wall Mount': { category: 'Starlink Hardware & Accessories', features: ['Exterior wall & fascia engineering', 'Weather-resistant industrial coating', 'Compact, low-profile footprint'] },
 };
 
-const items = products.map((p) => ({ ...p, ...(extras[p.name] ?? { category: 'Starlink Hardware & Accessories', features: [] }) }));
+const items = products.map((p) => {
+  const entry = catalog.find((c) => c.name === p.name)!;
+  return { ...p, id: entry.id, variants: entry.variants, ...(extras[p.name] ?? { category: 'Starlink Hardware & Accessories', features: [] }) };
+});
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const categories = [...new Set(items.map((i) => i.category))].map((name) => ({
   name,
@@ -38,6 +42,10 @@ const categories = [...new Set(items.map((i) => i.category))].map((name) => ({
     title="Hardware & Accessories"
     lede="Order genuine replacement parts and accessories directly from our local Grande Prairie inventory. Fast deployment for remote job sites and off-grid locations."
   />
+
+  <p id="thanks" class="thanks" role="status" hidden>
+    Thank you for your order! We'll be in touch shortly about delivery or pickup. Questions? Call 24/7: 587-416-0303.
+  </p>
 
   <div class="wrap store section">
     <aside class="cats" aria-labelledby="cats-title">
@@ -62,8 +70,8 @@ const categories = [...new Set(items.map((i) => i.category))].map((name) => ({
                 price={p.price}
                 description={p.description}
                 features={p.features}
-                buyLabel={p.buy_button_label}
-                href={p.checkout_url}
+                id={p.id}
+                variants={p.variants}
               />
             ))}
           </div>
@@ -82,7 +90,13 @@ const categories = [...new Set(items.map((i) => i.category))].map((name) => ({
   </div>
 </Layout>
 
+<script>
+  // After Square sends the customer back, show the thank-you notice. The cart itself is cleared by the drawer.
+  if (new URLSearchParams(location.search).get('thanks') === '1') document.getElementById('thanks')?.removeAttribute('hidden');
+</script>
+
 <style>
+  .thanks { margin: 0; padding: 16px var(--gutter); text-align: center; background: var(--accent); color: var(--on-accent); font-weight: 700; }
   .store { display: grid; gap: 40px; grid-template-columns: 1fr; }
   @media (min-width: 1024px) { .store { grid-template-columns: 220px 1fr; gap: 48px; } .cats { position: sticky; top: 100px; align-self: start; } }
   .cats h2 { font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }

@@ -11,10 +11,15 @@ interface Props {
   price?: string;
   description?: string;
   features: string[];
-  buyLabel: string;
-  href: string;
+  id: string;
+  variants: { key: string; label: string; cents: number }[] | null;
 }
-const { image, alt, name, stock, category, price, description, features, buyLabel, href } = Astro.props;
+const { image, alt, name, stock, category, price, description, features, id, variants } = Astro.props;
+
+// Products whose variants cost different amounts show "From $X" until a variant is chosen.
+const dollars = (cents: number) => `$${(cents / 100).toFixed(2)}`;
+const differs = variants ? new Set(variants.map((v) => v.cents)).size > 1 : false;
+const shownPrice = differs && variants ? `From ${dollars(Math.min(...variants.map((v) => v.cents)))}` : price;
 ---
 <article class="product">
   <div class="media">
@@ -23,14 +28,32 @@ const { image, alt, name, stock, category, price, description, features, buyLabe
   <div class="body">
     <p class="meta"><span class="stock">{stock}</span><span>{category}</span></p>
     <h3>{name}</h3>
-    {price && <p class="price">{price} <abbr title="Canadian dollars">CAD</abbr></p>}
+    {shownPrice && <p class="price">{shownPrice} <abbr title="Canadian dollars">CAD</abbr></p>}
     {description && <p class="desc">{description}</p>}
     <ul class="ticks">{features.map((f) => <li>{f}</li>)}</ul>
-    <a class="btn btn-primary btn-block" href={href} target="_blank" rel="noopener">
-      {buyLabel}<span class="visually-hidden">: {name} (opens secure checkout in a new tab)</span>
-    </a>
+    {variants && (
+      <label class="variant">
+        <span>Length</span>
+        <select class="variant-select" data-for={id}>
+          {variants.map((v) => <option value={v.key}>{differs ? `${v.label} - ${dollars(v.cents)}` : v.label}</option>)}
+        </select>
+      </label>
+    )}
+    <button type="button" class="btn btn-primary btn-block add-to-cart" data-id={id}>
+      Add to Cart<span class="visually-hidden">: {name}</span>
+    </button>
   </div>
 </article>
+
+<script>
+  // One delegated listener for every card; the cart drawer listens for 'cart:add'.
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.add-to-cart');
+    if (!btn) return;
+    const select = btn.closest('.product')?.querySelector<HTMLSelectElement>('.variant-select');
+    window.dispatchEvent(new CustomEvent('cart:add', { detail: { id: btn.dataset.id, variant: select?.value ?? null } }));
+  });
+</script>
 
 <style>
   .product { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease); }
@@ -46,5 +69,7 @@ const { image, alt, name, stock, category, price, description, features, buyLabe
   .desc { color: var(--muted); font-size: 0.95rem; }
   .ticks { font-size: 0.92rem; margin-bottom: 20px; }
   .btn { margin-top: auto; }
+  .variant { display: grid; gap: 6px; margin-bottom: 14px; font-size: 0.85rem; font-weight: 600; }
+  .variant select { padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); color: var(--ink); font: inherit; font-weight: 500; }
   @media (prefers-reduced-motion: reduce) { .product, .product:hover { transition: none; transform: none; } }
 </style>
