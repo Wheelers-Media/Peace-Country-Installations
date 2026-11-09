@@ -5,6 +5,7 @@ import QuoteForm from '../components/QuoteForm.astro';
 import ProductCard from '../components/ProductCard.astro';
 import products from '../../capture/products.json';
 import { captureImage } from '../lib/images';
+import { catalog } from '../lib/catalog.js';
 import heroImg from '../assets/hero-truck-aurora.webp';
 import rentalImg from '../assets/starlink-rental-installation.jpg';
 import leaseImg from '../../capture/assets/6a74c2d7b21ebe7e59e9001f.png';
@@ -156,7 +157,8 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
       <div class="product-grid">
         {featured.map((f) => {
           const p = byCheckout(f.url);
-          return <ProductCard image={captureImage(p.image_path)} alt={f.name} name={f.name} stock="In Stock - Grande Prairie" category="Starlink Hardware & Accessories" features={f.features} buyLabel="BUY NOW" href={p.checkout_url} />;
+          const entry = catalog.find((c) => c.name === p.name)!;
+          return <ProductCard image={captureImage(p.image_path)} alt={f.name} name={f.name} stock="In Stock - Grande Prairie" category="Starlink Hardware & Accessories" features={f.features} id={entry.id} variants={entry.variants} />;
         })}
       </div>
       <p class="parts-note">Need a part not listed, or looking for certified Starlink Installation in Northern Alberta? Contact local dispatch immediately: <a href="#quote">REQUEST A FREE QUOTE</a></p>
