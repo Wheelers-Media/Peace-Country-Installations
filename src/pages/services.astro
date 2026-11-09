@@ -36,17 +36,17 @@ const services = [
   <section class="section">
     <div class="wrap built">
       <div>
-        <h2>Built for Northern Alberta</h2>
+        <h2 data-split>Built for Northern Alberta</h2>
         <p class="lede">We pride ourselves on delivering competitive pricing, quality workmanship, and dependable local support that helps keep Northern Alberta connected.</p>
         <p>Whether you're working in the field, living off-grid, running a business, or simply need better connectivity, Peace Country Installations offers reliable solutions tailored to your needs and budget. We specialize in Lease to Own Financing to get you connected affordably, and Equipment Rentals for temporary projects, work camps, events, and remote operations.</p>
       </div>
-      <Image src={builtImg} alt="Equipment Rentals" widths={[480, 800, 1100]} sizes="(min-width: 960px) 520px, 92vw" class="built-img" />
+      <div class="built-frame"><Image src={builtImg} alt="Equipment Rentals" widths={[480, 800, 1100]} sizes="(min-width: 960px) 520px, 92vw" class="built-img" data-parallax /></div>
     </div>
   </section>
 
   <section class="section list-wrap" aria-label="Services">
     <div class="wrap">
-      <ul class="svc">
+      <ul class="svc" data-stagger>
         {services.map(([name, text]) => (
           <li><h3>{name}</h3><p>{text}</p></li>
         ))}
@@ -60,11 +60,12 @@ const services = [
 <style>
   .built { display: grid; gap: 40px; align-items: center; grid-template-columns: 1fr; }
   @media (min-width: 960px) { .built { grid-template-columns: 1fr 1fr; gap: 72px; } }
-  .built-img { width: 100%; border-radius: var(--r); aspect-ratio: 5 / 4; object-fit: cover; }
+  .built-frame { overflow: hidden; border-radius: var(--r); border: 1px solid var(--line); aspect-ratio: 5 / 4; }
+  .built-img { width: 100%; height: 100%; object-fit: cover; }
   .list-wrap { background: var(--surface); border-top: 1px solid var(--line); }
   .svc { display: grid; grid-template-columns: 1fr; column-gap: 64px; }
   @media (min-width: 760px) { .svc { grid-template-columns: 1fr 1fr; } }
-  .svc li { padding: 26px 0 22px; border-top: 1px solid var(--line); }
+  .svc li { padding: 30px 0 26px; border-top: 1px solid var(--line); }
   .svc h3 { font-size: 1.15rem; margin-bottom: 6px; }
   .svc h3::before { content: ''; display: inline-block; width: 10px; height: 10px; margin-right: 12px; border-radius: 2px; background: var(--accent); vertical-align: 0.05em; }
   .svc p { margin: 0; color: var(--muted); max-width: 52ch; }

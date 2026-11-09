@@ -130,6 +130,9 @@ const ld = {
     <CartDrawer />
 
     <a class="call-fab" href="tel:5874160303">📞 Call 24/7: 587-416-0303</a>
+    <script>
+      import '../scripts/motion.js';
+    </script>
   </body>
 </html>
 
@@ -138,30 +141,31 @@ const ld = {
   .skip:focus { top: 8px; }
   .topbar {
     margin: 0; padding: 8px var(--gutter); text-align: center;
-    background: var(--night); color: #dfe6ee;
-    font: 600 0.8rem/1.4 var(--font-head); letter-spacing: 0.03em;
+    background: var(--night); color: var(--muted);
+    font: 600 0.72rem/1.4 var(--font-head); letter-spacing: 0.14em; text-transform: uppercase;
+    border-bottom: 1px solid var(--line);
   }
   .site-header {
     position: sticky; top: 0; z-index: 20;
-    background: color-mix(in srgb, var(--surface) 92%, transparent);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    background: rgb(3 7 18 / 0.72);
+    backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
     border-bottom: 1px solid var(--line);
   }
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 68px; }
   .brand { display: block; flex-shrink: 0; }
   .logo { width: 132px; height: auto; }
-  .on-dark { display: none; }
-  @media (prefers-color-scheme: dark) { .on-light { display: none; } .on-dark { display: block; } }
+  .on-light { display: none; }
 
   .nav-desktop { display: none; align-items: center; gap: 28px; margin-left: auto; }
-  .cart-btn { position: relative; width: 48px; height: 48px; display: grid; place-items: center; border-radius: var(--r-sm); color: var(--ink); margin-left: auto; flex-shrink: 0; }
-  .cart-btn:hover { background: var(--surface-2); }
+  .cart-btn { position: relative; width: 48px; height: 48px; display: grid; place-items: center; border-radius: var(--r-sm); color: var(--ink); background: transparent; border: 1px solid var(--line); cursor: pointer; margin-left: auto; flex-shrink: 0; }
+  .cart-btn:hover { background: var(--surface-2); border-color: var(--accent); }
   .cart-count { position: absolute; top: 4px; right: 2px; min-width: 20px; height: 20px; padding-inline: 5px; display: grid; place-items: center; border-radius: 10px; background: var(--accent); color: var(--on-accent); font: 800 0.72rem/1 var(--font-head); font-variant-numeric: tabular-nums; }
   .cart-count[hidden] { display: none; }
   @media (min-width: 900px) { .cart-btn { margin-left: 0; } }
   .nav-desktop ul { display: flex; gap: 26px; }
-  .nav-desktop a:not(.btn), .nav-mobile a:not(.btn) { text-decoration: none; font: 600 0.95rem/1 var(--font-head); }
-  .nav-desktop ul a { display: inline-block; padding-block: 8px; border-bottom: 2px solid transparent; }
+  .nav-desktop a:not(.btn), .nav-mobile a:not(.btn) { text-decoration: none; font: 600 0.9rem/1 var(--font-head); letter-spacing: 0.02em; }
+  .nav-desktop .btn { min-height: 44px; padding: 0.65em 1.2em; font-size: 0.75rem; }
+  .nav-desktop ul a { display: inline-block; padding-block: 8px; border-bottom: 2px solid transparent; transition: border-color 0.2s, color 0.2s; }
   .nav-desktop ul a:hover, .nav-desktop ul a[aria-current='page'] { border-color: var(--accent); }
   .phone { color: var(--muted); font-variant-numeric: tabular-nums; }
   @media (min-width: 900px) { .nav-desktop { display: flex; } .nav-mobile { display: none; } }
@@ -179,12 +183,12 @@ const ld = {
   .nav-mobile nav {
     position: absolute; left: 0; right: 0; top: 68px;
     background: var(--surface); border-bottom: 1px solid var(--line);
-    padding: 8px var(--gutter) 20px; box-shadow: 0 18px 30px rgb(11 20 34 / 0.12);
+    padding: 8px var(--gutter) 20px; box-shadow: 0 24px 40px rgb(0 0 0 / 0.5);
   }
   .nav-mobile li a { display: block; padding: 14px 0; border-bottom: 1px solid var(--line); }
   .nav-mobile .btn { margin-top: 16px; }
 
-  .site-footer { background: var(--surface-2); padding-top: 64px; }
+  .site-footer { background: var(--surface); border-top: 1px solid var(--line); padding-top: 72px; }
   .cols { display: grid; gap: 36px; grid-template-columns: 1fr; }
   @media (min-width: 720px) { .cols { grid-template-columns: 1.6fr 1fr 1fr 1fr; } }
   .site-footer h2 { font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }

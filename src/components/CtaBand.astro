@@ -5,7 +5,7 @@ const { label } = Astro.props;
 <section class="cta">
   <div class="wrap cta-inner">
     <div>
-      <h2>Ready to Get Connected?</h2>
+      <h2 data-split>Ready to Get Connected?</h2>
       <p>Serving Grande Prairie and surrounding communities throughout Northern Alberta. Contact us today to discuss your specific connectivity needs.</p>
     </div>
     <div class="btns">
@@ -16,7 +16,7 @@ const { label } = Astro.props;
 </section>
 
 <style>
-  .cta { background: var(--night); color: #f1f5f9; padding-block: clamp(48px, 7vw, 80px); }
+  .cta { background: radial-gradient(900px 300px at 80% 0%, rgb(124 194 66 / 0.12), transparent 70%), var(--surface); color: #f1f5f9; padding-block: clamp(64px, 9vw, 112px); border-top: 1px solid var(--line); }
   .cta-inner { display: grid; gap: 28px; align-items: center; grid-template-columns: 1fr; }
   @media (min-width: 900px) { .cta-inner { grid-template-columns: 1.4fr auto; gap: 56px; } }
   p { color: #c5cfdb; max-width: 60ch; margin: 0; }

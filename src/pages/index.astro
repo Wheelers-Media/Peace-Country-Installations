@@ -28,78 +28,96 @@ const stories = [
 ];
 
 const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodge', 'Hythe', 'Valleyview', 'Fairview', 'Spirit River', 'Rycroft', 'Falher', 'High Prairie', 'Fox Creek', 'Peace River'];
+const ticker = ['Starlink Installation Northern Alberta', 'Starlink Rentals Grande Prairie', 'Starlink Lease-to-Own', 'Cellular Booster Installation', 'Job Site Internet Solutions Alberta', '24/7 Local Support'];
 ---
 <Layout
   title="Starlink Installation Northern Alberta | Peace Country Installations"
   description="Eliminate massive upfront equipment costs. Peace Country Installations delivers high-speed satellite internet to remote job sites, farms, and off-grid camps across Grande Prairie and the entire Peace Region with low monthly leasing options and flexible equipment rentals."
 >
   <!-- Hero -->
-  <section class="hero photo-band">
-    <Picture src={heroImg} alt="Peace Country Installations truck under the northern lights beside a canola field in Northern Alberta" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[480, 768, 1024, 1440]} sizes="100vw" class="bg" loading="eager" fetchpriority="high" />
+  <section class="hero photo-band" data-hero>
+    <Picture src={heroImg} alt="Peace Country Installations truck under the northern lights beside a canola field in Northern Alberta" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[480, 768, 1024, 1440, 1920]} sizes="100vw" class="bg" loading="eager" fetchpriority="high" />
     <div class="wrap hero-inner">
-      <h1 class="reveal reveal-2">Starlink internet across Northern Alberta.</h1>
-      <p class="lede reveal reveal-2">Bring reliable Starlink internet to your rural home, farm, or remote worksite. Our local team handles installation, with lease-to-own and rental options available.</p>
-      <div class="btns reveal reveal-3">
-        <a class="btn btn-primary" href="#quote">REQUEST A FREE QUOTE</a>
-        <a class="btn btn-ghost" href="#rentals">EXPLORE EQUIPMENT RENTALS</a>
+      <div class="hero-copy" data-hero-copy>
+        <p class="status" data-hero-in><span class="dot" aria-hidden="true"></span>Online 24/7 &middot; Grande Prairie, AB</p>
+        <h1>Starlink internet across Northern Alberta.</h1>
+        <p class="lede" data-hero-in>Bring reliable Starlink internet to your rural home, farm, or remote worksite. Our local team handles installation, with lease-to-own and rental options available.</p>
+        <div class="btns" data-hero-in>
+          <a class="btn btn-primary" href="#quote">REQUEST A FREE QUOTE</a>
+          <a class="btn btn-ghost" href="#rentals">EXPLORE EQUIPMENT RENTALS</a>
+        </div>
       </div>
+      <ul class="hero-values" aria-label="Why Peace Country Installations">
+        <li data-hero-cell><h2>No Large Upfront Costs</h2><p>Affordable Lease-To-Own programs</p></li>
+        <li data-hero-cell><h2>Available 24/7</h2><p>Round-the-clock support &amp; service</p></li>
+        <li data-hero-cell><h2>Locally Owned</h2><p>Serving the Peace Country region</p></li>
+      </ul>
     </div>
   </section>
 
-  <!-- Value strip -->
-  <section class="values" aria-label="Why Peace Country Installations">
-    <ul class="wrap">
-      <li><h2>No Large Upfront Costs</h2><p>Affordable Lease-To-Own programs</p></li>
-      <li><h2>Available 24/7</h2><p>Round-the-clock support &amp; service</p></li>
-      <li><h2>Locally Owned</h2><p>Serving the Peace Country region</p></li>
-    </ul>
-  </section>
+  <!-- Keyword ticker -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" data-marquee>
+      {[0, 1].map(() => (
+        <ul>{ticker.map((t) => <li>{t}</li>)}</ul>
+      ))}
+    </div>
+  </div>
 
-  <!-- Solutions -->
-  <section id="services" class="section">
-    <div class="wrap">
-      <h2>Our Connectivity Solutions</h2>
-      <p class="lede">Expert solutions designed specifically for Northern Alberta's unique geographical challenges.</p>
-      <div class="bento">
-        <article class="tile tile-main">
-          <Image src={leaseImg} alt="Starlink mounted on house roof under starry northern sky" widths={[480, 800, 1200]} sizes="(min-width: 960px) 640px, 92vw" />
-          <div class="tile-body">
-            <p class="badge">Most Popular</p>
+  <!-- Solutions: pinned horizontal scroll on desktop, stacked cards elsewhere -->
+  <section id="services" class="hs" data-hscroll>
+    <div class="hs-inner">
+      <div class="wrap sec-head">
+        <p class="kicker">Solutions</p>
+        <h2 data-split>Our Connectivity Solutions</h2>
+        <p class="lede">Expert solutions designed specifically for Northern Alberta's unique geographical challenges.</p>
+      </div>
+      <div class="hs-track" data-hscroll-track>
+        <article class="panel">
+          <div class="panel-media"><Image src={leaseImg} alt="Starlink mounted on house roof under starry northern sky" widths={[640, 1000, 1400]} sizes="(min-width: 960px) 920px, 92vw" data-hs-img /></div>
+          <div class="panel-body">
+            <p class="num">01 <span class="badge">Most Popular</span></p>
             <h3>Starlink Lease-to-Own</h3>
             <p>Focus on affordability, breaking down barriers to getting connected without huge initial hardware investments. Ideal for permanent residential, farm, and business setups.</p>
             <a class="btn btn-primary" href="#quote">GET STARTED</a>
           </div>
         </article>
-        <article class="tile" id="rentals">
-          <Image src={rentalImg} alt="Starlink dish installed at an industrial site at night" widths={[400, 640]} sizes="(min-width: 960px) 460px, 92vw" />
-          <div class="tile-body">
+        <article class="panel" id="rentals">
+          <div class="panel-media"><Image src={rentalImg} alt="Starlink dish installed at an industrial site at night" widths={[640, 1000, 1400]} sizes="(min-width: 960px) 920px, 92vw" data-hs-img /></div>
+          <div class="panel-body">
+            <p class="num">02</p>
             <h3>Equipment Rentals</h3>
             <p>Temporary, cost-effective connectivity solutions for remote job sites, work camps, events, and seasonal off-grid projects. Delivery and pickup available.</p>
             <a class="link" href="#quote">INQUIRE ABOUT RENTALS</a>
           </div>
         </article>
-        <article class="tile">
-          <Image src={installImg} alt="Professional Starlink Installation in Northern Alberta" widths={[400, 640]} sizes="(min-width: 960px) 460px, 92vw" />
-          <div class="tile-body">
+        <article class="panel">
+          <div class="panel-media"><Image src={installImg} alt="Professional Starlink Installation in Northern Alberta" widths={[640, 1000, 1400]} sizes="(min-width: 960px) 920px, 92vw" data-hs-img /></div>
+          <div class="panel-body">
+            <p class="num">03</p>
             <h3>Professional Installation</h3>
             <p>Expert installation services for Starlink systems, cellular signal boosters, and custom remote communication infrastructures.</p>
             <a class="link" href="#quote">BOOK INSTALLATION</a>
           </div>
         </article>
       </div>
+      <div class="hs-progress" aria-hidden="true"><span data-hscroll-bar></span></div>
     </div>
   </section>
 
   <!-- Customer stories -->
   <section class="section stories">
     <div class="wrap">
-      <h2>Real Customer Stories</h2>
-      <p class="lede">Hear directly from homes, farms, and businesses we've connected across the Peace Region.</p>
-      <div class="story-grid">
+      <div class="sec-head">
+        <p class="kicker">Customer stories</p>
+        <h2 data-split>Real Customer Stories</h2>
+        <p class="lede">Hear directly from homes, farms, and businesses we've connected across the Peace Region.</p>
+      </div>
+      <div class="story-grid" data-stagger>
         {stories.map((s) => (
           <figure class="story">
             <a class="yt" href={`https://www.youtube.com/watch?v=${s.id}`} data-yt={s.id} target="_blank" rel="noopener" aria-label={`Play video: ${s.name}`}>
-              <Image src={s.img} alt={s.alt} widths={[480, 720]} sizes="(min-width: 900px) 560px, 92vw" />
+              <Image src={s.img} alt={s.alt} widths={[480, 720, 1000]} sizes="(min-width: 900px) 600px, 92vw" />
               <span class="play" aria-hidden="true"></span>
             </a>
             <figcaption><h3>{s.name}</h3><p>{s.place}</p></figcaption>
@@ -112,8 +130,11 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
   <!-- Reviews -->
   <section class="section reviews">
     <div class="wrap">
-      <h2>Trusted by Northern Alberta</h2>
-      <p class="lede">See our live Google reviews from homes, farms, and businesses across the Peace Region.</p>
+      <div class="sec-head">
+        <p class="kicker">Reviews</p>
+        <h2 data-split>Trusted by Northern Alberta</h2>
+        <p class="lede">See our live Google reviews from homes, farms, and businesses across the Peace Region.</p>
+      </div>
       <iframe class="review-frame lc_reviews_widget" height="560" src="https://reputationhub.site/reputation/widgets/review_widget/rvJp0568pMpA6ZaQKLer" title="Google reviews for Peace Country Installations" loading="lazy"></iframe>
     </div>
   </section>
@@ -122,26 +143,30 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
   <section id="areas" class="section area">
     <div class="wrap area-grid">
       <div>
-        <h2>Serving Grande Prairie and the Entire Peace Country Region</h2>
-        <p>We provide delivery and professional installation throughout Northern Alberta. Our core service locations include:</p>
-        <ul class="towns">{towns.map((t) => <li>{t}</li>)}</ul>
+        <p class="kicker">Service area</p>
+        <h2 data-split>Serving Grande Prairie and the Entire Peace Country Region</h2>
+        <p class="lede">We provide delivery and professional installation throughout Northern Alberta. Our core service locations include:</p>
+        <ul class="towns" data-stagger>{towns.map((t) => <li>{t}</li>)}</ul>
         <p class="muted">and surrounding rural or off-grid communities.</p>
-        <div class="logistics">
+        <div class="logistics" data-reveal>
           <h3>Logistics &amp; Delivery</h3>
           <p>Pickup options are available. Delivery rates vary outside Grande Prairie. Security deposits may apply based on equipment selection.</p>
           <a class="link" href="https://www.facebook.com/profile.php?id=61583161493114" target="_blank" rel="noopener">Follow Us on Facebook</a>
         </div>
       </div>
-      <Image src={areaImg} alt="Sunset over the Peace River valley in Northern Alberta" widths={[480, 800, 1200]} sizes="(min-width: 960px) 540px, 92vw" class="area-img" />
+      <div class="area-frame">
+        <Image src={areaImg} alt="Sunset over the Peace River valley in Northern Alberta" widths={[480, 800, 1200]} sizes="(min-width: 960px) 540px, 92vw" class="area-img" data-parallax />
+      </div>
     </div>
   </section>
 
   <!-- Quote -->
   <section id="quote" class="section photo-band quote">
-    <Image src={quoteImg} alt="" widths={[640, 896]} sizes="100vw" class="bg" />
+    <Image src={quoteImg} alt="" widths={[640, 896, 1400]} sizes="100vw" class="bg" />
     <div class="wrap quote-grid">
       <div>
-        <h2>Get Your Free Estimate &amp; Quote Today</h2>
+        <p class="kicker">Free quote</p>
+        <h2 data-split>Get Your Free Estimate &amp; Quote Today</h2>
         <p class="lede">No pricing is one-size-fits-all. Tell us about your location and communication needs, and our local team will build a custom package for you.</p>
         <p class="call"><a href="tel:5874160303">Call 24/7: 587-416-0303</a></p>
       </div>
@@ -152,16 +177,19 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
   <!-- Hardware -->
   <section class="section">
     <div class="wrap">
-      <h2>Essential Starlink Hardware &amp; Regional Spare Parts</h2>
-      <p class="lede">We maintain a live inventory of genuine OEM replacements and heavy-duty mounts across our Grande Prairie regional nodes for rapid field deployment.</p>
-      <div class="product-grid">
+      <div class="sec-head">
+        <p class="kicker">Hardware</p>
+        <h2 data-split>Essential Starlink Hardware &amp; Regional Spare Parts</h2>
+        <p class="lede">We maintain a live inventory of genuine OEM replacements and heavy-duty mounts across our Grande Prairie regional nodes for rapid field deployment.</p>
+      </div>
+      <div class="product-grid" data-stagger>
         {featured.map((f) => {
           const p = byCheckout(f.url);
           const entry = catalog.find((c) => c.name === p.name)!;
           return <ProductCard image={captureImage(p.image_path)} alt={f.name} name={f.name} stock="In Stock - Grande Prairie" category="Starlink Hardware & Accessories" features={f.features} id={entry.id} variants={entry.variants} />;
         })}
       </div>
-      <p class="parts-note">Need a part not listed, or looking for certified Starlink Installation in Northern Alberta? Contact local dispatch immediately: <a href="#quote">REQUEST A FREE QUOTE</a></p>
+      <p class="parts-note" data-reveal>Need a part not listed, or looking for certified Starlink Installation in Northern Alberta? Contact local dispatch immediately: <a href="#quote">REQUEST A FREE QUOTE</a></p>
     </div>
   </section>
 </Layout>
@@ -191,80 +219,106 @@ const towns = ['Grande Prairie', 'Clairmont', 'Sexsmith', 'Wembley', 'Beaverlodg
 </script>
 
 <style>
-  .hero { min-height: min(88dvh, 760px); display: flex; align-items: center; }
-  /* Truck sits on the left of the photo, so copy and scrim go right on wide screens. */
+  /* Hero */
+  .hero { min-height: min(100svh - 101px, 860px); display: flex; }
+  .hero h1 { font-size: clamp(2.4rem, 1rem + 4.6vw, 4.5rem); max-width: 14ch; }
   .hero :global(.bg) { object-position: 30% center; }
+  .hero::before { background: linear-gradient(180deg, rgb(3 7 18 / 0.5) 0%, rgb(3 7 18 / 0.35) 40%, rgb(3 7 18 / 0.96) 100%); }
+  .hero-inner { display: flex; flex-direction: column; justify-content: space-between; gap: 40px; padding-block: clamp(40px, 6vw, 72px) clamp(24px, 3vw, 40px); }
+  .hero-copy { max-width: 760px; }
+  .status { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px; padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px; background: rgb(3 7 18 / 0.55); backdrop-filter: blur(8px); font: 600 0.72rem/1 var(--font-head); letter-spacing: 0.14em; text-transform: uppercase; color: #dbe4ee; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgb(124 194 66 / 0.6); animation: pulse 2.4s ease-out infinite; }
+  @keyframes pulse { 70% { box-shadow: 0 0 0 10px rgb(124 194 66 / 0); } 100% { box-shadow: 0 0 0 0 rgb(124 194 66 / 0); } }
+  @media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+  .hero .lede { margin: 22px 0 30px; color: #cbd5e1; }
   @media (min-width: 960px) {
-    .hero::before { background: linear-gradient(260deg, rgb(8 15 26 / 0.92) 0%, rgb(8 15 26 / 0.7) 45%, rgb(8 15 26 / 0.05) 80%); }
-    .hero-inner { display: flex; flex-direction: column; align-items: flex-start; padding-left: max(46%, var(--gutter)); }
+    .hero::before { background: linear-gradient(180deg, rgb(3 7 18 / 0.25) 0%, transparent 35%, rgb(3 7 18 / 0.96) 100%), linear-gradient(260deg, rgb(3 7 18 / 0.9) 0%, rgb(3 7 18 / 0.55) 42%, transparent 75%); }
+    .hero-copy { align-self: flex-end; margin-left: auto; width: min(56%, 720px); }
   }
-  .hero-inner { padding-block: 72px 88px; }
-  .hero h1 { font-size: clamp(2.3rem, 1.4rem + 3.4vw, 3.4rem); }
-  .hero .lede { max-width: 56ch; margin-bottom: 28px; font-size: clamp(1rem, 0.9rem + 0.5vw, 1.15rem); }
-  #rentals img { object-position: 50% 72%; }
+  .hero-values { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .hero-values li { padding: 18px 22px; border: 1px solid var(--line); border-radius: var(--r); background: rgb(11 21 40 / 0.6); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  .hero-values h2 { font: 700 1rem/1.3 var(--font-head); letter-spacing: -0.01em; margin-bottom: 2px; }
+  .hero-values p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+  @media (min-width: 760px) { .hero-values { grid-template-columns: repeat(3, 1fr); } }
 
-  .values { background: var(--surface); border-bottom: 1px solid var(--line); }
-  .values ul { display: grid; grid-template-columns: 1fr; }
-  .values li { padding: 22px 0; border-bottom: 1px solid var(--line); }
-  .values li:last-child { border-bottom: 0; }
-  .values h2 { font-size: 1.05rem; margin-bottom: 4px; }
-  .values p { margin: 0; color: var(--muted); }
-  @media (min-width: 760px) {
-    .values ul { grid-template-columns: repeat(3, 1fr); }
-    .values li { padding: 30px 28px; border-bottom: 0; border-left: 1px solid var(--line); }
-    .values li:first-child { border-left: 0; padding-left: 0; }
-  }
+  /* Ticker */
+  .marquee { overflow: hidden; border-block: 1px solid var(--line); background: var(--bg); padding-block: 18px; }
+  .marquee-track { display: flex; width: max-content; }
+  .marquee ul { display: flex; flex-shrink: 0; }
+  .marquee li { white-space: nowrap; padding-inline: 28px; font: 700 clamp(0.8rem, 0.7rem + 0.4vw, 1rem)/1 var(--font-head); letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 56px; }
+  .marquee li::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 
-  .bento { display: grid; gap: 20px; margin-top: 40px; grid-template-columns: 1fr; }
-  @media (min-width: 960px) {
-    .bento { grid-template-columns: 1.35fr 1fr; grid-template-rows: auto auto; }
-    .tile-main { grid-row: span 2; }
-  }
-  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; }
-  .tile img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
-  .tile-main img { aspect-ratio: 4 / 3; flex: 1; }
-  .tile-body { padding: 24px; }
-  .tile-body p { color: var(--muted); }
-  .tile-main .tile-body { padding: 28px; }
-  .tile-main h3 { font-size: 1.6rem; }
-  .tile-body .badge { display: inline-block; margin-bottom: 10px; padding: 4px 10px; border-radius: var(--r-sm); background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--accent-ink); font: 700 0.75rem/1.4 var(--font-head); letter-spacing: 0.06em; text-transform: uppercase; }
-  .link { font: 700 0.85rem/1.4 var(--font-head); letter-spacing: 0.04em; color: var(--accent-ink); text-underline-offset: 4px; display: inline-block; padding-block: 8px; }
-  .link::after { content: ' →'; }
+  /* Solutions: stacked cards by default, pinned horizontal track when .is-pinned */
+  .hs { padding-block: clamp(72px, 10vw, 140px) clamp(40px, 6vw, 80px); }
+  .hs-track { display: grid; grid-template-columns: 1fr; gap: 20px; padding-inline: var(--gutter); max-width: calc(var(--wrap) + 2 * var(--gutter)); margin-inline: auto; }
+  @media (min-width: 960px) { .hs-track { grid-template-columns: repeat(3, 1fr); } }
+  .panel { position: relative; isolation: isolate; overflow: hidden; border-radius: var(--r); border: 1px solid var(--line); min-height: 460px; display: flex; flex-direction: column; justify-content: flex-end; background: var(--surface); }
+  .panel-media { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+  .panel-media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  #rentals .panel-media :global(img) { object-position: 50% 82%; }
+  .panel::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(3 7 18 / 0.05) 20%, rgb(3 7 18 / 0.92) 78%); }
+  .panel-body { padding: clamp(22px, 3vw, 36px); max-width: 560px; }
+  .panel-body p:not(.num) { color: #cbd5e1; }
+  .panel h3 { font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.2rem); letter-spacing: -0.03em; }
+  .num { font: 700 0.8rem/1 var(--font-head); letter-spacing: 0.18em; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+  .badge { padding: 5px 10px; border-radius: 999px; background: rgb(124 194 66 / 0.16); color: var(--accent); font: 700 0.68rem/1.2 var(--font-head); letter-spacing: 0.1em; text-transform: uppercase; }
+  .link { font: 700 0.85rem/1.4 var(--font-head); letter-spacing: 0.06em; color: var(--accent); text-underline-offset: 4px; display: inline-block; padding-block: 8px; }
+  .link::after { content: ' \2192'; display: inline-block; transition: transform 0.25s var(--ease); }
+  .link:hover::after { transform: translateX(5px); }
 
-  .story-grid { display: grid; gap: 28px; margin-top: 36px; grid-template-columns: 1fr; }
+  .hs.is-pinned { height: 100svh; padding-block: 0; overflow: hidden; }
+  .hs.is-pinned .hs-inner { height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 3.5vh; padding-block: 104px 3vh; }
+  .hs.is-pinned .sec-head { margin-bottom: 0; }
+  .hs.is-pinned .sec-head h2 { font-size: clamp(1.8rem, 0.8rem + 2.6vw, 3rem); max-width: none; margin-bottom: 0.25em; }
+  .hs.is-pinned .sec-head .kicker { margin-bottom: 0.75rem; }
+  .hs.is-pinned .sec-head .lede { margin-bottom: 0; }
+  .hs.is-pinned .hs-track { display: flex; gap: 24px; width: max-content; max-width: none; margin: 0; padding-inline: max(var(--gutter), calc((100vw - var(--wrap)) / 2 + var(--gutter))); will-change: transform; }
+  .hs.is-pinned .panel { flex: 0 0 min(66vw, 880px); height: min(50svh, 500px); min-height: 0; }
+  .hs.is-pinned .panel-media :global(img) { width: 120%; max-width: none; margin-left: -10%; }
+  .hs-progress { display: none; }
+  .hs.is-pinned .hs-progress { display: block; height: 2px; margin-inline: auto; width: min(var(--wrap), calc(100% - 2 * var(--gutter))); background: var(--line); }
+  .hs-progress span { display: block; height: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+
+  /* Stories */
+  .story-grid { display: grid; gap: 28px; grid-template-columns: 1fr; }
   @media (min-width: 760px) { .story-grid { grid-template-columns: 1fr 1fr; } }
   .story { margin: 0; }
-  .yt { position: relative; display: block; border-radius: var(--r); overflow: hidden; aspect-ratio: 16 / 9; background: var(--night); }
-  .yt img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
-  .yt:hover img { transform: scale(1.03); }
-  .play { position: absolute; inset: 0; margin: auto; width: 72px; height: 72px; border-radius: 50%; background: var(--accent); box-shadow: 0 10px 30px rgb(0 0 0 / 0.35); }
-  .play::after { content: ''; position: absolute; left: 29px; top: 23px; border-left: 20px solid var(--on-accent); border-top: 13px solid transparent; border-bottom: 13px solid transparent; }
+  .yt { position: relative; display: block; border-radius: var(--r); overflow: hidden; aspect-ratio: 16 / 9; background: var(--night); border: 1px solid var(--line); }
+  .yt img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+  .yt:hover img { transform: scale(1.04); }
+  .play { position: absolute; inset: 0; margin: auto; width: 76px; height: 76px; border-radius: 50%; background: var(--accent); box-shadow: 0 10px 40px rgb(124 194 66 / 0.4); transition: transform 0.3s var(--ease); }
+  .yt:hover .play { transform: scale(1.1); }
+  .play::after { content: ''; position: absolute; left: 31px; top: 24px; border-left: 21px solid var(--on-accent); border-top: 14px solid transparent; border-bottom: 14px solid transparent; }
   :global(.yt-frame) { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: var(--r); display: block; }
   .story figcaption { padding-top: 16px; }
   .story h3 { margin-bottom: 2px; }
   .story p { margin: 0; color: var(--muted); }
 
   /* Matches the widget's own #0B1528 background so the embed reads as part of the page. */
-  .reviews { background: #0b1528; color: #f1f5f9; }
-  .reviews .lede { color: #c5cfdb; }
-  .review-frame { width: 100%; border: 0; margin-top: 28px; background: #0b1528; display: block; }
+  .reviews { background: #0b1528; color: #f1f5f9; border-block: 1px solid var(--line); }
+  .review-frame { width: 100%; border: 0; background: #0b1528; display: block; }
 
-  .area-grid { display: grid; gap: 40px; align-items: center; grid-template-columns: 1fr; }
-  @media (min-width: 960px) { .area-grid { grid-template-columns: 1.1fr 1fr; gap: 64px; } }
-  .towns { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 10px; }
-  .towns li { padding: 6px 12px; border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface); font-size: 0.9rem; font-weight: 500; }
-  .logistics { margin-top: 28px; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+  /* Area */
+  .area-grid { display: grid; gap: 48px; align-items: center; grid-template-columns: 1fr; }
+  @media (min-width: 960px) { .area-grid { grid-template-columns: 1.1fr 1fr; gap: 80px; } }
+  .towns { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 14px; }
+  .towns li { padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 0.9rem; font-weight: 500; transition: border-color 0.2s, color 0.2s; }
+  .towns li:hover { border-color: var(--accent); color: var(--accent); }
+  .logistics { margin-top: 28px; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
   .logistics p { color: var(--muted); }
-  .area-img { width: 100%; border-radius: var(--r); aspect-ratio: 4 / 5; object-fit: cover; }
+  .area-frame { overflow: hidden; border-radius: var(--r); border: 1px solid var(--line); aspect-ratio: 4 / 5; }
+  .area-img { width: 100%; height: 100%; object-fit: cover; }
 
-  .quote-grid { display: grid; gap: 40px; align-items: start; grid-template-columns: 1fr; }
-  @media (min-width: 960px) { .quote-grid { grid-template-columns: 0.8fr 1.2fr; gap: 64px; } .quote-grid > div:first-child { position: sticky; top: 110px; } }
+  /* Quote */
+  .quote-grid { display: grid; gap: 48px; align-items: start; grid-template-columns: 1fr; }
+  @media (min-width: 960px) { .quote-grid { grid-template-columns: 0.8fr 1.2fr; gap: 72px; } .quote-grid > div:first-child { position: sticky; top: 110px; } }
   .call { font: 700 1.1rem/1.4 var(--font-head); }
   .call a { color: var(--accent); }
 
-  .product-grid { display: grid; gap: 22px; margin-top: 40px; grid-template-columns: 1fr; }
+  /* Hardware */
+  .product-grid { display: grid; gap: 22px; grid-template-columns: 1fr; }
   @media (min-width: 640px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
-  .parts-note { margin: 36px 0 0; color: var(--muted); }
-  .parts-note a { color: var(--accent-ink); font-weight: 700; }
+  .parts-note { margin: 40px 0 0; color: var(--muted); }
+  .parts-note a { color: var(--accent); font-weight: 700; }
 </style>

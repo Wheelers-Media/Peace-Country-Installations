@@ -59,7 +59,7 @@ const categories = [...new Set(items.map((i) => i.category))].map((name) => ({
       {categories.map((c) => (
         <section id={c.id} aria-labelledby={`${c.id}-h`}>
           <h2 id={`${c.id}-h`} class="visually-hidden">{c.name}</h2>
-          <div class="grid">
+          <div class="grid" data-stagger>
             {c.items.map((p) => (
               <ProductCard
                 image={captureImage(p.image_path)}

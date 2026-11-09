@@ -51,10 +51,10 @@ const team = [
   <section class="section pillars-wrap">
     <div class="wrap pillars">
       <div>
-        <h2>Mission Statement</h2>
+        <h2 data-split>Mission Statement</h2>
         <p class="lede">To keep Northern Alberta connected through reliable Starlink and communication solutions, fair pricing, professional installations, quality equipment, and dependable support backed by honest communication and local service.</p>
       </div>
-      <div class="safety">
+      <div class="safety" data-reveal>
         <h2>Safety Commitment</h2>
         <p>All team members hold current fall arrest certifications and required safety tickets to ensure every installation is completed safely.</p>
       </div>
@@ -64,7 +64,7 @@ const team = [
   {team.map((p) => (
     <section class="section person" aria-labelledby={p.id}>
       <div class="wrap person-grid">
-        <div class="portrait">
+        <div class="portrait" data-reveal>
           <Image src={p.img} alt={p.alt} widths={[360, 560, 800]} sizes="(min-width: 900px) 380px, 92vw" />
         </div>
         <div class="bio">
@@ -84,10 +84,12 @@ const team = [
   .pillars-wrap { background: var(--surface); border-bottom: 1px solid var(--line); }
   .pillars { display: grid; gap: 40px; grid-template-columns: 1fr; }
   @media (min-width: 900px) { .pillars { grid-template-columns: 1.5fr 1fr; gap: 72px; align-items: start; } }
-  .pillars h2 { font-size: 1.5rem; }
-  .safety { padding: 26px; border-radius: var(--r); background: var(--surface-2); }
+  .pillars h2 { font-size: clamp(1.6rem, 1rem + 2vw, 2.6rem); }
+  .safety { padding: 28px; border-radius: var(--r); background: var(--surface-2); border: 1px solid var(--line); }
+  .safety h2 { font-size: 1.3rem; }
   .safety p { margin: 0; }
   .person + .person { border-top: 1px solid var(--line); }
+  .bio h2 { font-size: clamp(2rem, 1rem + 3vw, 3.4rem); }
   .person-grid { display: grid; gap: 36px; grid-template-columns: 1fr; }
   @media (min-width: 900px) { .person-grid { grid-template-columns: 380px 1fr; gap: 72px; } .portrait { position: sticky; top: 100px; align-self: start; } }
   .portrait img { width: 100%; max-width: 420px; border-radius: var(--r); aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
