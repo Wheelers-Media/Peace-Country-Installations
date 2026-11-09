@@ -135,7 +135,7 @@ const ticker = ['Starlink Installation Northern Alberta', 'Starlink Rentals Gran
         <h2 data-split>Trusted by Northern Alberta</h2>
         <p class="lede">See our live Google reviews from homes, farms, and businesses across the Peace Region.</p>
       </div>
-      <iframe class="review-frame lc_reviews_widget" height="560" src="https://reputationhub.site/reputation/widgets/review_widget/rvJp0568pMpA6ZaQKLer" title="Google reviews for Peace Country Installations" loading="lazy"></iframe>
+      <div class="review-clip"><iframe class="review-frame lc_reviews_widget" height="560" src="https://reputationhub.site/reputation/widgets/review_widget/rvJp0568pMpA6ZaQKLer" title="Google reviews for Peace Country Installations" loading="lazy"></iframe></div>
     </div>
   </section>
 
@@ -296,7 +296,9 @@ const ticker = ['Starlink Installation Northern Alberta', 'Starlink Rentals Gran
 
   /* Matches the widget's own #0B1528 background so the embed reads as part of the page. */
   .reviews { background: #0b1528; color: #f1f5f9; border-block: 1px solid var(--line); }
-  .review-frame { width: 100%; border: 0; background: #0b1528; display: block; }
+  /* The widget draws its own white-edged frame inside the iframe; clip a 14px edge so only its content shows. */
+  .review-clip { overflow: hidden; border-radius: var(--r); background: #0b1528; }
+  .review-frame { width: 100%; border: 0; background: #0b1528; display: block; clip-path: inset(14px); margin-block: -14px; }
 
   /* Area */
   .area-grid { display: grid; gap: 48px; align-items: center; grid-template-columns: 1fr; }
